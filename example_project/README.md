@@ -1,7 +1,4 @@
-# django-workflow example project
-
-This example Django project demonstrates how to incorporate
-`django-workflow-engine` into you Django application.
+# django-feedback-govuk example project
 
 # Getting started
 
