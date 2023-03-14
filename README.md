@@ -17,7 +17,7 @@ INSTALLED_APPS = [
 ]
 ```
 
-2. Create a new email template in the GovUk Notify service
+2. Create a new email template in the GovUk Notify service, making sure to create a ((feedback_url)) field.
 
 You'll need an API key and template ID from the gov.uk Notify service.
 
@@ -26,9 +26,9 @@ You'll need an API key and template ID from the gov.uk Notify service.
 ```py
 GOVUK_NOTIFY_API_KEY=<your-api-key>
 DJANGO_FEEDBACK_GOVUK = {
-    SERVICE_NAME = <your-service>
-    FEEDBACK_NOTIFICATION_EMAIL_TEMPLATE_ID = xxx
-    FEEDBACK_NOTIFICATION_EMAIL_RECIPIENTS = ["email@domain.com", ]
+    "SERVICE_NAME": <your-service>,
+    "FEEDBACK_NOTIFICATION_EMAIL_TEMPLATE_ID": xxx,
+    "FEEDBACK_NOTIFICATION_EMAIL_RECIPIENTS": ["email@domain.com", ],
 }
 ```
 
@@ -42,6 +42,12 @@ The email addresses are for every recipient that should get an email when feedba
 ```
 
 ... or use the built-in templates:
+
+```py
+
+```
+
+and add it to your urls.py:
 
 ```py
 

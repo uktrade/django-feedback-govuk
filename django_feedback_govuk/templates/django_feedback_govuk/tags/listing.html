@@ -1,5 +1,4 @@
-{% extends "base.html" %}
-{% block content %}
+
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <h1 class="govuk-heading-l">Feedback</h1>
@@ -26,4 +25,3 @@
             {% include "includes/pagination.html" with object_type_name="submissions" page=page_obj pagination_pages=paginator %}
         </div>
     </div>
-{% endblock content %}

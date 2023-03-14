@@ -10,7 +10,7 @@ from .models import Feedback
 
 
 class FeedbackView(FormView):
-    template_name = "feedback/submit.html"
+    template_name = settings.DJANGO_FEEDBACK_GOVUK.get('SUBMIT_TEMPLATE', "django_feedback_govuk/templates/submit.html")
     form_class = FeedbackForm
     success_url = reverse_lazy("feedback-confirm")
 
@@ -24,14 +24,14 @@ class FeedbackView(FormView):
         # Send an email to inform the team of the feedback
         notify.email(
             personalisation={
-                "feedback_url": settings.SITE_URL + reverse("feedback-listing"),
+                "feedback_url": self.request.build_absolute_uri(reverse("feedback-listing")),
             },
         )
         return super().form_valid(form)
 
 
 def feedback_confirm(request):
-    return render(request, "feedback/confirm.html")
+    return render(request, settings.DJANGO_FEEDBACK_GOVUK.get('CONFIRM_TEMPLATE', "django_feedback_govuk/templates/confirm.html"))
 
 
 class UserCanViewFeedback(UserPassesTestMixin):
@@ -40,7 +40,7 @@ class UserCanViewFeedback(UserPassesTestMixin):
 
 
 class FeedbackListingView(UserCanViewFeedback, ListView):
-    template_name = "feedback/listing.html"
+    template_name = settings.DJANGO_FEEDBACK_GOVUK.get('LISTING_TEMPLATE', "django_feedback_govuk/templates/listing.html")
     model = Feedback
     paginate_by = 25
 

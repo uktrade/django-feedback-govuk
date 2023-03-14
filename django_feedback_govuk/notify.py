@@ -8,12 +8,12 @@ def email(personalisation: Dict):
     notification_client = NotificationsAPIClient(
         settings.GOVUK_NOTIFY_API_KEY,
     )
-    email_addresses = settings.FEEDBACK_NOTIFICATION_EMAIL_RECIPIENTS
+    email_addresses = settings.DJANGO_FEEDBACK_GOVUK['FEEDBACK_NOTIFICATION_EMAIL_RECIPIENTS']
 
     for email_address in email_addresses:
         message_response = notification_client.send_email_notification(
             email_address=email_address,
-            template_id=settings.FEEDBACK_NOTIFICATION_EMAIL_TEMPLATE_ID.value,
+            template_id=settings.DJANGO_FEEDBACK_GOVUK['FEEDBACK_NOTIFICATION_EMAIL_TEMPLATE_ID'],
             personalisation=personalisation,
         )
 
