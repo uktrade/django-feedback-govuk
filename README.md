@@ -24,11 +24,18 @@ You'll need an API key and template ID from the gov.uk Notify service.
 3. Add the following settings to the file:
 
 ```py
-GOVUK_NOTIFY_API_KEY=<your-api-key>
+# Crispy forms
+CRISPY_ALLOWED_TEMPLATE_PACKS = ["gds"]
+CRISPY_TEMPLATE_PACK = "gds"
+
+# Gov Notify
+GOVUK_NOTIFY_API_KEY="<your-api-key>"
+
+# Django Feedback GovUK
 DJANGO_FEEDBACK_GOVUK = {
-    SERVICE_NAME = <your-service>
-    FEEDBACK_NOTIFICATION_EMAIL_TEMPLATE_ID = xxx
-    FEEDBACK_NOTIFICATION_EMAIL_RECIPIENTS = ["email@domain.com", ]
+    "SERVICE_NAME": "<your-service>",
+    "FEEDBACK_NOTIFICATION_EMAIL_TEMPLATE_ID": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "FEEDBACK_NOTIFICATION_EMAIL_RECIPIENTS": ["email@example.com"],
 }
 ```
 
