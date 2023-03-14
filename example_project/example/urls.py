@@ -16,7 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+from django_feedback_govuk import urls as feedback_urls
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('feedback/', include(feedback_urls)),
 ]

@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_feedback_govuk',
+    'crispy_forms',
+    'crispy_forms_gds',
 ]
 
 MIDDLEWARE = [
@@ -122,3 +125,18 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Crispy forms
+CRISPY_ALLOWED_TEMPLATE_PACKS = ["gds"]
+CRISPY_TEMPLATE_PACK = "gds"
+
+# Gov Notify
+GOVUK_NOTIFY_API_KEY="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+
+# Django Feedback GovUK
+DJANGO_FEEDBACK_GOVUK = {
+    "SERVICE_NAME": "Example Service",
+    "FEEDBACK_NOTIFICATION_EMAIL_TEMPLATE_ID": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "FEEDBACK_NOTIFICATION_EMAIL_RECIPIENTS": ["email@example.com"],
+}
