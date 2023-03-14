@@ -7,14 +7,6 @@ import django.db.models.deletion
 
 class Migration(migrations.Migration):
 
-    replaces = [
-        ("feedback", "0001_initial"),
-        ("feedback", "0002_alter_feedback_satisfaction"),
-        ("feedback", "0003_alter_feedback_options"),
-        ("feedback", "0004_alter_feedback_satisfaction"),
-        ("feedback", "0005_feedback_submitted_at"),
-    ]
-
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
