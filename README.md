@@ -34,8 +34,10 @@ DJANGO_FEEDBACK_GOVUK = {
 
 The email addresses are for every recipient that should get an email when feedback is submitted.
 
+<!--
 3. Load the template tags into your template:
 
 ```py
 
 ```
+-->
