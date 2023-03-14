@@ -1,17 +1,22 @@
 #!/usr/bin/env python
-#import os, sys
+# import os, sys
 import sys
 from unittest import TestSuite
 
 from boot_django import boot_django
 
+
 # call the django setup routine
 boot_django()
 
-default_labels = ["receipts.tests", ]
+default_labels = [
+    "receipts.tests",
+]
+
 
 def get_suite(labels=default_labels):
     from django.test.runner import DiscoverRunner
+
     runner = DiscoverRunner(verbosity=1)
     failures = runner.run_tests(labels)
     if failures:
