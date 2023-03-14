@@ -4,7 +4,10 @@
     Reference:
     https://github.com/uktrade/trade-remedies-public/blob/develop/trade_remedies_public/templates/v2/feedback/collect_feedback.html
 {% endcomment %}
-{% load i18n crispy_forms_field crispy_forms_gds %}
+{% load static i18n crispy_forms_field crispy_forms_gds %}
+
+<link rel="stylesheet"
+      href="{% static 'django_feedback_govuk/star-rating.css' %}">
 
 {% if field.is_hidden %}
     {{ field }}
