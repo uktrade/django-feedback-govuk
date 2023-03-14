@@ -13,11 +13,13 @@ pip install django-feedback
 ```py
 INSTALLED_APPS = [
     ...
-    "feedback"
+    "django_feedback_govuk"
 ]
 ```
 
 2. Create a new email template in the GovUk Notify service
+
+You'll need an API key and template ID from the gov.uk Notify service.
 
 3. Add the following settings to the file:
 
@@ -30,7 +32,7 @@ DJANGO_FEEDBACK_GOVUK = {
 }
 ```
 
-The API key and template ID will need to be obtained via the gov.uk Notify service, and the email addresses are for every recipient that should get an email when feedback is submitted.
+The email addresses are for every recipient that should get an email when feedback is submitted.
 
 3. Load the template tags into your template:
 
