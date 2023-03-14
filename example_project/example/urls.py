@@ -20,6 +20,6 @@ from django_feedback_govuk import urls as feedback_urls
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('feedback/', include(feedback_urls)),
+    path("admin/", admin.site.urls),
+    path("", include(feedback_urls)),
 ]
