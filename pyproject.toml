@@ -1,0 +1,54 @@
+[tool.poetry]
+name = "django-feedback"
+version = "0.1.0"
+description = "A Django app to gather and send internal Government staff feedback"
+authors = ["jafacakes2011 <cameron.lamb@digitial.trade.gov.uk>", "marcelkornblum <marcel.kornblum@digitial.trade.gov.uk>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "django_feedback"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+Django = "^4.1.7"
+crispy-forms-gds = "^0.2.4"
+notifications-python-client = "^8.0.0"
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.1.0"
+isort = "^5.12.0"
+flake8 = "^6.0.0"
+djlint = "^1.19.16"
+pytest = "^7.2.2"
+pytest-django = "^4.5.2"
+coverage = "^7.2.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+DJANGO_SETTINGS_MODULE = "tests.settings"
+python_files = ["tests.py", "test_*.py", "*_tests.py"]
+
+[tool.coverage.run]
+omit = [
+    "*/migrations/*",
+    "*/test/*",
+    "selenium_tests/*"
+]
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+skip_gitignore = true
+line_length = 88
+lines_after_imports = 2
+
+[tool.djlint]
+extension="html"
+profile="django"
+format_js=false
+format_css=false
+ignore="T002,H006,H017,H023"
+preserve_blank_lines=true
