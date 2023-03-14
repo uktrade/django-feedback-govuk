@@ -1,7 +1,6 @@
 {
   "dependencies": {
     "govuk-frontend": "^4.4.0",
-    "htmx.org": "^1.8.4",
     "node-sass": "^7.0.3"
   },
   "scripts": {
