@@ -25,7 +25,9 @@ FEEDBACK_NOTIFICATION_EMAIL_TEMPLATE_ID = xxx
 FEEDBACK_NOTIFICATION_EMAIL_RECIPIENTS = ["email@domain.com", ]
 ```
 
-3. Load the template tags and add the dev client plus any css and js:
+The API key and template ID will need to be obtained via the gov.uk Notify service, and the email addresses are for every recipient that should get an email when feedback is submitted.
+
+3. Load the template tags into your template:
 
 ```py
 
