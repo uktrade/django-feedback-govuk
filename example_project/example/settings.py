@@ -38,9 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_feedback_govuk',
     'crispy_forms',
     'crispy_forms_gds',
+    'django_feedback_govuk',
 ]
 
 MIDDLEWARE = [
