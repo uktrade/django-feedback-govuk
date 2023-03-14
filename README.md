@@ -13,7 +13,9 @@ pip install django-feedback
 ```py
 INSTALLED_APPS = [
     ...
-    "django_feedback_govuk"
+    'crispy_forms',
+    'crispy_forms_gds',
+    'django_feedback_govuk',
 ]
 ```
 
