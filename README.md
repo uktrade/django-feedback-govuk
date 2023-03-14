@@ -5,7 +5,7 @@ A Django app to gather and send internal Government staff feedback, e.g. for ope
 ## Installation
 
 ```
-pip install django-feedback
+pip install django-feedback-govuk
 ```
 
 1. Add `django-feedback` to your INSTALLED_APPS settings:
@@ -36,6 +36,12 @@ The email addresses are for every recipient that should get an email when feedba
 
 <!--
 3. Load the template tags into your template:
+
+```py
+
+```
+
+... or use the built-in templates:
 
 ```py
 
