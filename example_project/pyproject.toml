@@ -9,6 +9,7 @@ license = "MIT"
 python = "^3.10"
 Django = "^4.1.7"
 django-feedback-govuk = { path = "../", develop = true }
+whitenoise = "^6.4.0"
 
 [tool.poetry.dev-dependencies]
 
