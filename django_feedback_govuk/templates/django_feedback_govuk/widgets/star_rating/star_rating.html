@@ -21,7 +21,12 @@
 
 
         {% if tag %}
-            <{{ tag }}
+            <{{ tag }} id="div_{{ field.auto_id }}"
+            class="govuk-form-group{% if form_show_errors %}{% if field.errors %} govuk-form-group--error{% endif %}{% endif %}{% if wrapper_class %} {{ wrapper_class }}{% endif %}{% if field.css_classes %} {{ field.css_classes }}{% endif %}">
+
+            {% include "django_feedback_govuk/widgets/star_rating/radios.html" %}
+
+            </{{ tag }}>
         {% else %}
             <div {% endif %}
                  id="div_{{ field.auto_id }}"
@@ -29,12 +34,11 @@
 
                 {% include "django_feedback_govuk/widgets/star_rating/radios.html" %}
 
-                </
-                {% if tag %}
-                    {{ tag }}
-                {% else %}
-                    div
-                {% endif %}
-                >
-                {% if max_characters or max_words %}</div>{% endif %}
-            {% endif %}
+            </div>
+        {% endif %}
+
+
+
+
+        {% if max_characters or max_words %}</div>{% endif %}
+    {% endif %}
