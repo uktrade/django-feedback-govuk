@@ -28,7 +28,7 @@ class FeedbackForm(ModelForm):
             Fieldset(
                 Field.radios(
                     "satisfaction",
-                    template="widgets/star_rating/star_rating.html",
+                    template="django_feedback_govuk/widgets/star_rating/star_rating.html",
                 ),
                 legend="Overall, how did you feel about the service you received today?",
                 legend_size=Size.MEDIUM,
