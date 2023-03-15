@@ -157,7 +157,4 @@ DJANGO_FEEDBACK_GOVUK = {
     "SERVICE_NAME": "Example Service",
     "FEEDBACK_NOTIFICATION_EMAIL_TEMPLATE_ID": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
     "FEEDBACK_NOTIFICATION_EMAIL_RECIPIENTS": ["email@example.com"],
-    # "SUBMIT_TEMPLATE": "submit.html",
-    # "CONFIRM_TEMPLATE": "confirm.html",
-    # "LISTING_TEMPLATE": "listing.html",
 }
