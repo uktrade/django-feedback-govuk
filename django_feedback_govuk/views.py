@@ -10,7 +10,7 @@ from .models import Feedback
 
 
 class FeedbackView(FormView):
-    template_name = settings.DJANGO_FEEDBACK_GOVUK.get('SUBMIT_TEMPLATE', "django_feedback_govuk/templates/submit.html")
+    template_name = "django_feedback_govuk/templates/submit.html"
     form_class = FeedbackForm
     success_url = reverse_lazy("feedback-confirm")
 
@@ -31,7 +31,7 @@ class FeedbackView(FormView):
 
 
 def feedback_confirm(request):
-    return render(request, settings.DJANGO_FEEDBACK_GOVUK.get('CONFIRM_TEMPLATE', "django_feedback_govuk/templates/confirm.html"))
+    return render(request, "django_feedback_govuk/templates/confirm.html")
 
 
 class UserCanViewFeedback(UserPassesTestMixin):
@@ -40,9 +40,21 @@ class UserCanViewFeedback(UserPassesTestMixin):
 
 
 class FeedbackListingView(UserCanViewFeedback, ListView):
-    template_name = settings.DJANGO_FEEDBACK_GOVUK.get('LISTING_TEMPLATE', "django_feedback_govuk/templates/listing.html")
+    template_name = "django_feedback_govuk/templates/listing.html"
     model = Feedback
-    paginate_by = 25
+    paginate_by = 5
 
     def get_queryset(self):
         return Feedback.objects.all().order_by("-submitted_at")
+
+# #
+# # AJAX supporting views - e.g. using HTMX to render without pageloads
+# #
+
+# class AjaxFeedbackView(FeedbackView):
+#     template_name = "django_feedback_govuk/partials/submit.html"
+#     success_url = reverse_lazy("feedback-confirm-ajax")
+
+
+# def feedback_confirm_ajax(request):
+#     return render(request, "django_feedback_govuk/partials/confirm.html")
