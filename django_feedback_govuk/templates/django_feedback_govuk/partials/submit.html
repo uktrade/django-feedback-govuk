@@ -1,0 +1,11 @@
+
+{% load crispy_forms_tags crispy_forms_gds %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        {% error_summary form %}
+        <h1 class="govuk-heading-l">Give feedback on {{ service_name }}</h1>
+        <form novalidate method="post" action="{% url 'feedback-submit' %}">
+            {% crispy form %}
+        </form>
+    </div>
+</div>

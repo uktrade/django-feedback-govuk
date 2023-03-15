@@ -5,7 +5,7 @@ A Django app to gather and send internal Government staff feedback, e.g. for ope
 ## Installation
 
 ```
-pip install django-feedback
+pip install django-feedback-govuk
 ```
 
 1. Add `django-feedback` to your INSTALLED_APPS settings:
@@ -19,7 +19,9 @@ INSTALLED_APPS = [
 ]
 ```
 
-2. Create a new email template in the GovUk Notify service
+2. Create a new email template in the GovUk Notify service, making sure to create a ((feedback_url)) field.
+
+> Note that ((feedback_url)) will be a link to the listing view, not an individual piece of feedback.
 
 You'll need an API key and template ID from the gov.uk Notify service.
 
@@ -43,10 +45,37 @@ DJANGO_FEEDBACK_GOVUK = {
 
 The email addresses are for every recipient that should get an email when feedback is submitted.
 
-<!--
-3. Load the template tags into your template:
+3. Build your own templates
+
+Override the built-in templates by making new templates in your app under the
+`django_feedback_govuk/templates` path. You'll need templates for `submit.html`, `confirm.html`
+and `listing.html`, each of which should load its respective template tag from `feedback_submit`,
+`feedback_confirm` and `feedback_listing`.
+
+For example:
 
 ```py
-
+{# /your-project/templates/django_feedback_govuk/templates/submit.html #}
+{% extends "base.html" %}
+{% load feedback_tags %}
+{% block content %}
+    {% feedback_submit %}
+{% endblock content %}
 ```
--->
+
+> If you'd like to use the templatetags without causing page loads to new views
+
+4. Add the URLs to your project
+
+```py
+from django_feedback_govuk import urls as feedback_urls
+
+
+urlpatterns = [
+    ...
+    path("feedback/", include(feedback_urls)),
+    ...
+]
+```
+
+5. Set up user permissions
