@@ -154,7 +154,10 @@ GOVUK_NOTIFY_API_KEY = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 
 # Django Feedback GovUK
 DJANGO_FEEDBACK_GOVUK = {
-    "SERVICE_NAME": "Example Service",
+    "SERVICE_NAME": "Example Project",
     "FEEDBACK_NOTIFICATION_EMAIL_TEMPLATE_ID": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
     "FEEDBACK_NOTIFICATION_EMAIL_RECIPIENTS": ["email@example.com"],
+    "COPY": {
+        "submit_title": "Tell us what you thought about {{ service_name }}"
+    }
 }

@@ -1,5 +1,6 @@
 from crispy_forms_gds.helper import FormHelper
 from crispy_forms_gds.layout import HTML, Field, Fieldset, Layout, Size, Submit
+from django.conf import settings
 from django.forms import HiddenInput, ModelForm, RadioSelect
 
 from .models import Feedback, SatisfactionOptions
@@ -12,6 +13,8 @@ class FeedbackForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+        copy = settings.DJANGO_FEEDBACK_GOVUK["COPY"]
 
         self.fields["submitter"].widget = HiddenInput()
         self.fields["satisfaction"].label = ""
@@ -30,17 +33,17 @@ class FeedbackForm(ModelForm):
                     "satisfaction",
                     template="django_feedback_govuk/widgets/star_rating/star_rating.html",
                 ),
-                legend="Overall, how did you feel about the service you received today?",
+                legend=copy["field_satisfaction_legend"],
                 legend_size=Size.MEDIUM,
             ),
             Fieldset(
                 HTML(
-                    "<p class='govuk-hint'>Do not include any personal or "
-                    "financial information, for example your National "
-                    "Insurance or credit card numbers.</p>"
+                    ("<p class='govuk-hint'>",
+                    copy["field_comment_hint"],
+                    "</p>")
                 ),
                 Field("comment"),
-                legend="How could we improve this service?",
+                legend=copy["field_comment_legend"],
                 legend_size=Size.MEDIUM,
             ),
             Submit("submit", "Send feedback"),

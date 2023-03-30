@@ -1,5 +1,6 @@
 from django import template
 from django.conf import settings
+from django.template import Template, Context
 
 from django_feedback_govuk.forms import FeedbackForm
 
@@ -15,15 +16,29 @@ def feedback_submit(context):
         initial["submitter"] = context.request.user
         form = FeedbackForm(initial=initial)
 
-    return {
+    new_context = {
         "form": form,
         "service_name": settings.DJANGO_FEEDBACK_GOVUK["SERVICE_NAME"],
     }
+    copy = settings.DJANGO_FEEDBACK_GOVUK["COPY"]
+    for key, value in copy.items():
+        copy[key] = Template(value).render(Context(new_context))
+    new_context['copy'] = copy
+
+    return new_context
 
 
-@register.inclusion_tag("django_feedback_govuk/partials/confirm.html")
-def feedback_confirm():
-    return {}
+@register.inclusion_tag("django_feedback_govuk/partials/confirm.html", takes_context=True)
+def feedback_confirm(context):
+    new_context = {
+        "service_name": settings.DJANGO_FEEDBACK_GOVUK["SERVICE_NAME"],
+    }
+    copy = settings.DJANGO_FEEDBACK_GOVUK["COPY"]
+    for key, value in copy.items():
+        copy[key] = Template(value).render(Context(new_context))
+    new_context['copy'] = copy
+
+    return new_context
 
 
 @register.inclusion_tag("django_feedback_govuk/partials/listing.html", takes_context=True)
