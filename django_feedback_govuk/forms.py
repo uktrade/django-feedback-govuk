@@ -4,6 +4,7 @@ from django.conf import settings
 from django.forms import HiddenInput, ModelForm, RadioSelect
 
 from .models import Feedback, SatisfactionOptions
+from .settings import dfg_settings
 
 
 class FeedbackForm(ModelForm):
@@ -13,8 +14,6 @@ class FeedbackForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
-        copy = settings.DJANGO_FEEDBACK_GOVUK["COPY"]
 
         self.fields["submitter"].widget = HiddenInput()
         self.fields["satisfaction"].label = ""
@@ -33,17 +32,19 @@ class FeedbackForm(ModelForm):
                     "satisfaction",
                     template="django_feedback_govuk/widgets/star_rating/star_rating.html",
                 ),
-                legend=copy["field_satisfaction_legend"],
+                legend=dfg_settings.COPY_FIELD_SATISFACTION_LEGEND,
                 legend_size=Size.MEDIUM,
             ),
             Fieldset(
                 HTML(
-                    ("<p class='govuk-hint'>",
-                    copy["field_comment_hint"],
-                    "</p>")
+                    (
+                        "<p class='govuk-hint'>",
+                        dfg_settings.COPY_FIELD_COMMENT_HINT,
+                        "</p>",
+                    )
                 ),
                 Field("comment"),
-                legend=copy["field_comment_legend"],
+                legend=dfg_settings.COPY_FIELD_COMMENT_LEGEND,
                 legend_size=Size.MEDIUM,
             ),
             Submit("submit", "Send feedback"),
