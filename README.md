@@ -50,12 +50,12 @@ just the fields you want to, using the `{{ service_name }}` variable if necessar
 
 ```py
 {
-    "submit_title": "Give feedback on {{ service_name }}",
-    "field_satisfaction_legend": "Overall, how did you feel about the service you received today?",
-    "field_comment_legend": "How could we improve this service?",
-    "field_comment_hint": "Do not include any personal or financial information, for example your National Insurance or credit card numbers.",
-    "confirm_title": "Feedback submitted",
-    "confirm_body": "Thank you for submitting your feedback.",
+    "SUBMIT_TITLE": "Give feedback on {{ service_name }}",
+    "CONFIRM_TITLE": "Feedback submitted",
+    "CONFIRM_BODY": "Thank you for submitting your feedback.",
+    "FIELD_SATISFACTION_LEGEND": "Overall, how did you feel about the service you received today?",
+    "FIELD_COMMENT_LEGEND": "How could we improve this service?",
+    "FIELD_COMMENT_HINT": "Do not include any personal or financial information, for example your National Insurance or credit card numbers.",
 }
 ```
 
