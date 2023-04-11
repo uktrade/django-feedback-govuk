@@ -3,17 +3,19 @@ from typing import Dict
 from django.conf import settings
 from notifications_python_client.notifications import NotificationsAPIClient
 
+from .settings import dfg_settings
+
 
 def email(personalisation: Dict):
     notification_client = NotificationsAPIClient(
         settings.GOVUK_NOTIFY_API_KEY,
     )
-    email_addresses = settings.DJANGO_FEEDBACK_GOVUK['FEEDBACK_NOTIFICATION_EMAIL_RECIPIENTS']
+    email_addresses = dfg_settings.FEEDBACK_NOTIFICATION_EMAIL_RECIPIENTS
 
     for email_address in email_addresses:
         message_response = notification_client.send_email_notification(
             email_address=email_address,
-            template_id=settings.DJANGO_FEEDBACK_GOVUK['FEEDBACK_NOTIFICATION_EMAIL_TEMPLATE_ID'],
+            template_id=dfg_settings.FEEDBACK_NOTIFICATION_EMAIL_TEMPLATE_ID,
             personalisation=personalisation,
         )
 
