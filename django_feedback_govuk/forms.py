@@ -36,13 +36,7 @@ class FeedbackForm(ModelForm):
                 legend_size=Size.MEDIUM,
             ),
             Fieldset(
-                HTML(
-                    (
-                        "<p class='govuk-hint'>",
-                        dfg_settings.COPY_FIELD_COMMENT_HINT,
-                        "</p>",
-                    )
-                ),
+                HTML(f"<p class='govuk-hint'>{dfg_settings.COPY_FIELD_COMMENT_HINT}</p>"),
                 Field("comment"),
                 legend=dfg_settings.COPY_FIELD_COMMENT_LEGEND,
                 legend_size=Size.MEDIUM,

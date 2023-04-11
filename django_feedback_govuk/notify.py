@@ -12,6 +12,9 @@ def email(personalisation: Dict):
     )
     email_addresses = dfg_settings.FEEDBACK_NOTIFICATION_EMAIL_RECIPIENTS
 
+    if len(email_addresses) < 1:
+        raise Exception("No feedback recipients configured")
+
     for email_address in email_addresses:
         message_response = notification_client.send_email_notification(
             email_address=email_address,
