@@ -40,6 +40,22 @@ DJANGO_FEEDBACK_GOVUK = {
     "SERVICE_NAME": "<your-service>",
     "FEEDBACK_NOTIFICATION_EMAIL_TEMPLATE_ID": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
     "FEEDBACK_NOTIFICATION_EMAIL_RECIPIENTS": ["email@example.com"],
+    "COPY": {
+        #...add any copy tags to override here
+    }
+}
+
+The copy dict contains string IDs for all user-facing copy, defaulting to the following (override
+just the fields you want to, using the `{{ service_name }}` variable if necessary for _title and _body strings):
+
+```py
+{
+    "SUBMIT_TITLE": "Give feedback on {{ service_name }}",
+    "CONFIRM_TITLE": "Feedback submitted",
+    "CONFIRM_BODY": "Thank you for submitting your feedback.",
+    "FIELD_SATISFACTION_LEGEND": "Overall, how did you feel about the service you received today?",
+    "FIELD_COMMENT_LEGEND": "How could we improve this service?",
+    "FIELD_COMMENT_HINT": "Do not include any personal or financial information, for example your National Insurance or credit card numbers.",
 }
 ```
 
