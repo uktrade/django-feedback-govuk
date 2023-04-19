@@ -26,16 +26,18 @@ crispy-forms-gds = "^0.2.4"
 notifications-python-client = "^8.0.0"
 django-crispy-forms = "^1.9"
 
-[tool.poetry.group.dev.dependencies]
-black = "^23.1.0"
-isort = "^5.12.0"
-flake8 = "^6.0.0"
-djlint = "^1.19.16"
+[tool.poetry.group.testing.dependencies]
 pytest = "^7.2.2"
 pytest-django = "^4.5.2"
 coverage = "^7.2.1"
 tox = "^4.4.12"
 factory-boy = "^3.2.1"
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.1.0"
+isort = "^5.12.0"
+flake8 = "^6.0.0"
+djlint = "^1.19.16"
 
 
 [build-system]
