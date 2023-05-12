@@ -16,6 +16,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_forms_gds',
     'django_feedback_govuk',
+    ...
 ]
 ```
 
@@ -44,6 +45,7 @@ DJANGO_FEEDBACK_GOVUK = {
         #...add any copy tags to override here
     }
 }
+```
 
 The copy dict contains string IDs for all user-facing copy, defaulting to the following (override
 just the fields you want to, using the `{{ service_name }}` variable if necessary for _title and _body strings):

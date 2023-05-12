@@ -6,6 +6,7 @@ build:
 	poetry install
 
 init:
+	$(manage) migrate
 	$(manage) loaddata fixtures/test_users.json
 
 run:
