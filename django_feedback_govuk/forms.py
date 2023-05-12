@@ -21,7 +21,6 @@ class FeedbackForm(ModelForm):
         self.fields["satisfaction"].widget = RadioSelect()
         self.fields["satisfaction"].choices = SatisfactionOptions.choices
         self.fields["comment"].label = ""
-        self.fields["comment"].required = True
 
         self.helper = FormHelper()
 
