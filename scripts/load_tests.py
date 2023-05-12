@@ -10,7 +10,7 @@ from boot_django import boot_django
 boot_django()
 
 default_labels = [
-    "receipts.tests",
+    "django_feedback_gov.tests",
 ]
 
 

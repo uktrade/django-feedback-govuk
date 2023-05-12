@@ -6,7 +6,7 @@ import django
 from django.conf import settings
 
 
-BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "receipts"))
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "django_feedback_govuk"))
 
 
 def boot_django():
@@ -19,7 +19,11 @@ def boot_django():
                 "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
             }
         },
-        INSTALLED_APPS=("feedback",),
+        INSTALLED_APPS=(
+            "django.contrib.auth",
+            "django.contrib.contenttypes",
+            "django_feedback_govuk",
+        ),
         TIME_ZONE="UTC",
         USE_TZ=True,
     )
