@@ -1,6 +1,5 @@
 from crispy_forms_gds.helper import FormHelper
-from crispy_forms_gds.layout import HTML, Field, Fieldset, Layout, Size, Submit
-from django.conf import settings
+from crispy_forms_gds.layout import HTML, Field, Fieldset, Hidden, Layout, Size, Submit
 from django.forms import HiddenInput, ModelForm, RadioSelect
 
 from .models import Feedback, SatisfactionOptions
@@ -15,18 +14,19 @@ class FeedbackForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.fields["submitter"].widget = HiddenInput()
+        submitter = self.initial["submitter"]
+        submitter_id = str(submitter.id) if submitter.id else ""
+
+        self.fields["submitter"].required = False
         self.fields["satisfaction"].label = ""
         self.fields["satisfaction"].required = True
         self.fields["satisfaction"].widget = RadioSelect()
         self.fields["satisfaction"].choices = SatisfactionOptions.choices
         self.fields["comment"].label = ""
-        self.fields["comment"].required = True
 
         self.helper = FormHelper()
-
         self.helper.layout = Layout(
-            Field("submitter"),
+            Hidden("submitter", submitter_id),
             Fieldset(
                 Field.radios(
                     "satisfaction",
@@ -43,3 +43,4 @@ class FeedbackForm(ModelForm):
             ),
             Submit("submit", "Send feedback"),
         )
+

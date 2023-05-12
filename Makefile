@@ -12,3 +12,11 @@ check:
 
 test:
 	poetry run tox
+
+manage = poetry run python ./manage.py
+
+migrate:
+	$(manage) migrate
+
+makemigrations:
+	$(manage) makemigrations
