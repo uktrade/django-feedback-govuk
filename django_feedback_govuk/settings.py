@@ -4,13 +4,22 @@ from django.conf import settings
 
 
 DEFAULTS = {
-    "SERVICE_NAME": "Example service",
+    "SERVICE_NAME": (sn := "Example Service"),
     "FEEDBACK_NOTIFICATION_EMAIL_TEMPLATE_ID": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
     "FEEDBACK_NOTIFICATION_EMAIL_RECIPIENTS": [
         "email@example.com",
     ],
+    "ISSUE_CHOICES": [
+        ("0001", "I did not experience any issues"),
+        ("0002", "Process is not clear"),
+        ("0003", "Not enough guidance"),
+        ("0004", "I was asked for information I did not have"),
+        ("0005", "I did not get the information I expected"),
+        ("0006", "Other issue (please describe below")
+    ],
+    "ISSUES_LEGEND": "Which of the following issues did you experience?",
     "COPY": {
-        "SUBMIT_TITLE": "Give feedback on {{ service_name }}",
+        "SUBMIT_TITLE": f"Give feedback on {sn}",
         "CONFIRM_TITLE": "Feedback submitted",
         "CONFIRM_BODY": "Thank you for submitting your feedback.",
         "FIELD_SATISFACTION_LEGEND": "Overall, how did you feel about the service you received today?",
@@ -37,22 +46,18 @@ class DjangoFeedbackGovUKSettings:
         # Get COPY values
         if attr.startswith("COPY_"):
             copy_key = attr[5:]
-            value = django_settings.get("COPY", {}).get(copy_key)
-            if value:
-                # Return the value from user settings
-                return value
-            # Return the value from defaults
-            return DEFAULTS["COPY"][copy_key]
-
+            try:
+                return django_settings.get("COPY", {}).get(copy_key, DEFAULTS["COPY"][copy_key])
+            except KeyError:
+                raise ValueError(f"No value for {attr!r} and no default provided")
         if attr in django_settings:
             # Return the value from user settings
             return django_settings[attr]
 
         default_value = DEFAULTS.get(attr, None)
         if default_value is None and attr not in DEFAULTS:
-            raise AttributeError(f"No value set for DJANGO_FEEDBACK_GOVUK['{attr}']")
+            raise AttributeError(f"No value set for DJANGO_FEEDBACK_GOVUK[{attr!r}]")
         # Return the value from defaults
         return default_value
-
 
 dfg_settings = DjangoFeedbackGovUKSettings()
