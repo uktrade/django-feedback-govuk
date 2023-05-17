@@ -18,6 +18,15 @@ DEFAULTS = {
         ("0006", "Other issue (please describe below")
     ],
     "ISSUES_LEGEND": "Which of the following issues did you experience?",
+    "ACTIVITY_CHOICES": [
+        ("1001", "Report a barrier"),
+        ("1002", "Set a progress update"),
+        ("1003", "Export a barrier CSV report"),
+        ("1004", "Create or edit an action plan"),
+        ("1005", "Other, please describe below"),
+        ("1006", "Do not know")
+    ],
+    "ACTIVITIES_LEGEND": "What were you trying to do today?",
     "COPY": {
         "SUBMIT_TITLE": f"Give feedback on {sn}",
         "CONFIRM_TITLE": "Feedback submitted",
