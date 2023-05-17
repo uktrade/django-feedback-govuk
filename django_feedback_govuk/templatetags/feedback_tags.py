@@ -16,9 +16,7 @@ def feedback_submit(context):
     if "form" in context:
         form = context["form"]
     else:
-        initial = {}
-        initial["submitter"] = context.request.user
-        form = FeedbackForm(initial=initial)
+        form = FeedbackForm(initial={"submitter": context.request.user})
 
     new_context = {
         "form": form,
