@@ -16,6 +16,7 @@ class SatisfactionOptions(TextChoices):
 
 
 class Feedback(models.Model):
+    id = models.IntegerField(primary_key=True)
     satisfaction = models.CharField(max_length=30, choices=SatisfactionOptions.choices)
     comment = models.TextField(blank=True)
     issues = models.TextField()
