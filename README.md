@@ -47,18 +47,16 @@ DJANGO_FEEDBACK_GOVUK = {
 }
 ```
 
-The copy dict contains string IDs for all user-facing copy, defaulting to the following (override
+The COPY_* variables contain string IDs for all user-facing copy, defaulting to the following (override
 just the fields you want to, using the `{{ service_name }}` variable if necessary for _title and _body strings):
 
 ```py
-{
-    "SUBMIT_TITLE": "Give feedback on {{ service_name }}",
-    "CONFIRM_TITLE": "Feedback submitted",
-    "CONFIRM_BODY": "Thank you for submitting your feedback.",
-    "FIELD_SATISFACTION_LEGEND": "Overall, how did you feel about the service you received today?",
-    "FIELD_COMMENT_LEGEND": "How could we improve this service?",
-    "FIELD_COMMENT_HINT": "Do not include any personal or financial information, for example your National Insurance or credit card numbers.",
-}
+    "COPY_SUBMIT_TITLE": "Give feedback on {{ service_name }}",
+    "COPY_CONFIRM_TITLE": "Feedback submitted",
+    "COPY_CONFIRM_BODY": "Thank you for submitting your feedback.",
+    "COPY_FIELD_SATISFACTION_LEGEND": "Overall, how did you feel about the service you received today?",
+    "COPY_FIELD_COMMENT_LEGEND": "How could we improve this service?",
+    "COPY_FIELD_COMMENT_HINT": "Do not include any personal or financial information, for example your National Insurance or credit card numbers.",
 ```
 
 The email addresses are for every recipient that should get an email when feedback is submitted.
