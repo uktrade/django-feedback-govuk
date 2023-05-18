@@ -30,10 +30,11 @@ class FeedbackForm(ModelForm):
         self.fields["satisfaction"].required = True
         self.fields["satisfaction"].widget = RadioSelect()
         self.fields["satisfaction"].choices = SatisfactionOptions.choices
-        self.fields["issues"].label = ""
-        self.fields["issues"].required = False
-        self.fields["issues"].widget = CheckboxSelectMultiple()
-        self.fields["issues"].choices = issue_choices
+        if issue_choices:
+            self.fields["issues"].label = ""
+            self.fields["issues"].required = False
+            self.fields["issues"].widget = CheckboxSelectMultiple()
+            self.fields["issues"].choices = issue_choices
         if activity_choices:
             self.fields["activities"].label=""
             self.fields["activities"].required = True
@@ -51,13 +52,16 @@ class FeedbackForm(ModelForm):
                 ),
                 legend=satisfaction_legend,
                 legend_size=Size.MEDIUM,
-            ),
-            Fieldset(
-                Field.checkboxes("issues"),
-                legend=issues_legend,
-                legend_size=Size.MEDIUM,
             )
         ]
+        if issue_choices:
+            layouts += [
+                Fieldset(
+                    Field.checkboxes("issues"),
+                    legend=issues_legend,
+                    legend_size=Size.MEDIUM,
+                )
+            ]
         if activity_choices:
             layouts += [
                 Fieldset(
