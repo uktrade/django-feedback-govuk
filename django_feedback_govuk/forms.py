@@ -1,10 +1,11 @@
 from crispy_forms_gds.helper import FormHelper
 from crispy_forms_gds.layout import HTML, Field, Fieldset, Hidden, Layout, Size, Submit
-from django.forms import HiddenInput, ModelForm, RadioSelect, CheckboxSelectMultiple, CheckboxInput
+from django.forms import HiddenInput, Form, ModelForm, RadioSelect, CheckboxSelectMultiple, CheckboxInput, CharField, ChoiceField
 
 from .models import Feedback, SatisfactionOptions
 from .settings import dfg_settings
 
+print("Now running", __file__)
 
 class FeedbackForm(ModelForm):
     class Meta:
@@ -24,7 +25,7 @@ class FeedbackForm(ModelForm):
         super().__init__(*args, **kwargs)
 
         submitter = self.initial["submitter"]
-        submitter_id = str(submitter.id) if submitter.id else "anonymous user"
+        submitter_id = str(submitter.id) if submitter.id else None
 
         self.fields["satisfaction"].label = ""
         self.fields["satisfaction"].required = True
@@ -55,21 +56,19 @@ class FeedbackForm(ModelForm):
             )
         ]
         if issue_choices:
-            layouts += [
-                Fieldset(
+            layouts.append(Fieldset(
                     Field.checkboxes("issues"),
                     legend=issues_legend,
                     legend_size=Size.MEDIUM,
                 )
-            ]
+            )
         if activity_choices:
-            layouts += [
-                Fieldset(
+            layouts.append(Fieldset(
                     Field.checkboxes("activities"),
                     legend=activities_legend,
                     legend_size=Size.MEDIUM,
                 )
-            ]
+            )
         layouts += [
             Fieldset(
                 HTML(f"<p class='govuk-hint'>{comment_hint}</p>"),
@@ -77,9 +76,81 @@ class FeedbackForm(ModelForm):
                 legend=comment_legend,
                 legend_size=Size.MEDIUM,
             ),
-            Submit("submit", "Send feedback"),
+            Submit("submit", "Submit feedback"),
         ]
 
         self.helper = FormHelper()
         self.helper.layout = Layout(*layouts)
+
+class FeedbackForm(Form):
+    satisfaction = ChoiceField(required=True, widget=RadioSelect, choices=SatisfactionOptions.choices)
+    submit = Submit("submit", "Submit feedback")
+    def __init__(self,
+                 satisfaction_legend = dfg_settings.COPY_FIELD_SATISFACTION_LEGEND,
+                 *args,
+                 **kwargs
+        ):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout=Layout(
+            Hidden("submitter", "Need code here!"),
+            Fieldset(
+                Field.radios(
+                    "satisfaction",
+                    template="django_feedback_govuk/widgets/star_rating/star_rating.html",
+                ),
+                legend=satisfaction_legend,
+                legend_size=Size.MEDIUM,
+            ),
+            Submit("submit", "Submit feedback")
+        )
+
+
+#class FeedbackForm(Form):
+    #satisfaction = ChoiceField(required=True, widget=RadioSelect, choices=SatisfactionOptions.choices)
+    #submit = Submit("submit", "Submit feedback")
+    #def __init__(self,
+                 #satisfaction_legend=dfg_settings.COPY_FIELD_SATISFACTION_LEGEND,
+                 #*args,
+                 #**kwargs
+        #):
+        #super().__init__(*args, **kwargs)
+        #self.helper = FormHelper()
+        #self.helper.layout=Layout(
+            #Hidden("submitter", "Need code here!"),
+            #Fieldset(
+                #Field.radios(
+                    #"satisfaction",
+                    #template="django_feedback_govuk/widgets/star_rating/star_rating.html",
+                #),
+                #legend=satisfaction_legend,
+                #legend_size=Size.MEDIUM,
+            #),
+            #Submit("submit", "Submit feedback")
+        #)
+
+import sys
+print("About to define FeedbackForm", file=sys.stderr)
+
+class FeedbackForm(Form):
+    issues = ChoiceField(widget=CheckboxSelectMultiple(), choices=dfg_settings.ISSUE_CHOICES)
+    submit = Submit("submit", "Submit feedback")
+
+    def __init__(self,
+                 *args,
+                 **kwargs
+        ):
+        super().__init__(*args, **kwargs)
+        print(dir())
+        #self.__class__.satisfaction.choices=issue_choices
+        self.helper = FormHelper()
+        self.helper.layout=Layout(
+            Hidden("submitter", "Need code here!"),
+            Fieldset(
+                    Field.checkboxes("issues"),
+                    legend=dfg_settings.ISSUES_LEGEND,
+                    legend_size=Size.MEDIUM,
+                ),
+            Submit("submit", "Submit feedback")
+        )
 

@@ -17,7 +17,7 @@ DEFAULTS = {
         ("0005", "I did not get the information I expected"),
         ("0006", "Other issue (please describe below")
     ],
-    "ISSUES_LEGEND": "Which of the following issues did you experience?",
+    "ISSUES_LEGEND": "Did you experience any of the following issues?",
     "ACTIVITY_CHOICES": [
         ("1001", "Report a barrier"),
         ("1002", "Set a progress update"),
@@ -30,7 +30,7 @@ DEFAULTS = {
     "COPY_SUBMIT_TITLE": f"Give feedback on {sn}",
     "COPY_CONFIRM_TITLE": "Feedback submitted",
     "COPY_CONFIRM_BODY": "Thank you for submitting your feedback.",
-    "COPY_FIELD_SATISFACTION_LEGEND": "Overall, how did you feel about the service you received today?",
+    "COPY_FIELD_SATISFACTION_LEGEND": f"Overall, how would you rate your experience with {sn} today?",
     "COPY_FIELD_COMMENT_LEGEND": "How could we improve this service?",
     "COPY_FIELD_COMMENT_HINT": "Do not include any personal or financial information, for example your National Insurance or credit card numbers.",
 }
