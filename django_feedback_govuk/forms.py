@@ -27,14 +27,10 @@ class FeedbackForm(ModelForm):
         submitter = self.initial["submitter"]
         submitter_id = str(submitter.id) if submitter.id else None
 
-        self.fields["satisfaction"].label = ""
-        self.fields["satisfaction"].required = True
-        self.fields["satisfaction"].widget = RadioSelect()
-        self.fields["satisfaction"].choices = SatisfactionOptions.choices
         if issue_choices:
             self.fields["issues"].label = ""
             self.fields["issues"].required = False
-            self.fields["issues"].widget = CheckboxSelectMultiple()
+            self.fields["issues"].widget = CheckboxSelectMultiple(attrs={"class": "corblimey"})
             self.fields["issues"].choices = issue_choices
         if activity_choices:
             self.fields["activities"].label=""
@@ -46,14 +42,6 @@ class FeedbackForm(ModelForm):
 
         layouts = [
             Hidden("submitter", submitter_id),
-            Fieldset(
-                Field.radios(
-                    "satisfaction",
-                    template="django_feedback_govuk/widgets/star_rating/star_rating.html",
-                ),
-                legend=satisfaction_legend,
-                legend_size=Size.MEDIUM,
-            )
         ]
         if issue_choices:
             layouts.append(Fieldset(
@@ -82,7 +70,7 @@ class FeedbackForm(ModelForm):
         self.helper = FormHelper()
         self.helper.layout = Layout(*layouts)
 
-class FeedbackForm(Form):
+class StarsForm(Form):
     satisfaction = ChoiceField(required=True, widget=RadioSelect, choices=SatisfactionOptions.choices)
     submit = Submit("submit", "Submit feedback")
     def __init__(self,
@@ -105,52 +93,4 @@ class FeedbackForm(Form):
             Submit("submit", "Submit feedback")
         )
 
-
-#class FeedbackForm(Form):
-    #satisfaction = ChoiceField(required=True, widget=RadioSelect, choices=SatisfactionOptions.choices)
-    #submit = Submit("submit", "Submit feedback")
-    #def __init__(self,
-                 #satisfaction_legend=dfg_settings.COPY_FIELD_SATISFACTION_LEGEND,
-                 #*args,
-                 #**kwargs
-        #):
-        #super().__init__(*args, **kwargs)
-        #self.helper = FormHelper()
-        #self.helper.layout=Layout(
-            #Hidden("submitter", "Need code here!"),
-            #Fieldset(
-                #Field.radios(
-                    #"satisfaction",
-                    #template="django_feedback_govuk/widgets/star_rating/star_rating.html",
-                #),
-                #legend=satisfaction_legend,
-                #legend_size=Size.MEDIUM,
-            #),
-            #Submit("submit", "Submit feedback")
-        #)
-
-import sys
-print("About to define FeedbackForm", file=sys.stderr)
-
-class FeedbackForm(Form):
-    issues = ChoiceField(widget=CheckboxSelectMultiple(), choices=dfg_settings.ISSUE_CHOICES)
-    submit = Submit("submit", "Submit feedback")
-
-    def __init__(self,
-                 *args,
-                 **kwargs
-        ):
-        super().__init__(*args, **kwargs)
-        print(dir())
-        #self.__class__.satisfaction.choices=issue_choices
-        self.helper = FormHelper()
-        self.helper.layout=Layout(
-            Hidden("submitter", "Need code here!"),
-            Fieldset(
-                    Field.checkboxes("issues"),
-                    legend=dfg_settings.ISSUES_LEGEND,
-                    legend_size=Size.MEDIUM,
-                ),
-            Submit("submit", "Submit feedback")
-        )
 

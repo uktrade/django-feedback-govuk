@@ -15,7 +15,7 @@ DEFAULTS = {
         ("0003", "Not enough guidance"),
         ("0004", "I was asked for information I did not have"),
         ("0005", "I did not get the information I expected"),
-        ("0006", "Other issue (please describe below")
+        ("0006", "Other issue")
     ],
     "ISSUES_LEGEND": "Did you experience any of the following issues?",
     "ACTIVITY_CHOICES": [
@@ -23,8 +23,8 @@ DEFAULTS = {
         ("1002", "Set a progress update"),
         ("1003", "Export a barrier CSV report"),
         ("1004", "Create or edit an action plan"),
-        ("1005", "Other, please describe below"),
-        ("1006", "Do not know")
+        ("1005", "Do not know"),
+        ("1006", "Other, please describe below")
     ],
     "ACTIVITIES_LEGEND": "What were you trying to do today?",
     "COPY_SUBMIT_TITLE": f"Give feedback on {sn}",
