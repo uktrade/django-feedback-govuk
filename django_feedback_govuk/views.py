@@ -5,8 +5,27 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic import FormView, ListView
 
 from . import notify
-from .forms import FeedbackForm
+from .forms import FeedbackForm, StarsForm
 from .models import Feedback
+
+class StarsView(FormView):
+    template_name = "django_feedback_govuk/templates/stars.html"
+    form_class = StarsForm
+    success_url = reverse_lazy("feedback-submit")
+
+    def get_form_kwargs(self):
+        """
+        Inject user_id and project name to pass as hidden fields.
+
+        Currently an exact copy of FeedbackView.get_form_kwargs ...
+        """
+        kw = super().get_form_kwargs()
+        kw['project'] = self.request.session['project']
+        kw['user_id'] = None
+        if self.request.user.is_authenticated:
+            kw['user_id'] = self.request.user.id
+        return kw
+
 
 
 class FeedbackView(FormView):
@@ -14,19 +33,20 @@ class FeedbackView(FormView):
     form_class = FeedbackForm
     success_url = reverse_lazy("feedback-confirm")
 
-    def get_initial(self):
-        initial = super().get_initial()
-        initial["submitter"] = self.request.user
-        return initial
+    def get_form_kwargs(self):
+        """
+        Inject project ID stored in session to form creation arguments.
+        """
+        kw = super().get_form_kwargs()
+        kw['project'] = self.request.session['project']
+        kw['user_id'] = None
+        if self.request.user.is_authenticated:
+            kw['user_id'] = self.request.user.id
+        return kw
+
 
     def form_valid(self, form):
-        form.save()
-        # Send an email to inform the team of the feedback
-        notify.email(
-            personalisation={
-                "feedback_url": self.request.build_absolute_uri(reverse("feedback-listing")),
-            },
-        )
+        form.update()  # Update the star rating with other feedback
         return super().form_valid(form)
 
 

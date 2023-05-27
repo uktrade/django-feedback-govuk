@@ -2,33 +2,31 @@ from crispy_forms_gds.helper import FormHelper
 from crispy_forms_gds.layout import HTML, Field, Fieldset, Hidden, Layout, Size, Submit
 from django.forms import HiddenInput, Form, ModelForm, RadioSelect, CheckboxSelectMultiple, CheckboxInput, CharField, ChoiceField, IntegerField, Textarea, TextInput
 
-from .models import Feedback, SatisfactionOptions
+from .models import SatisfactionOptions
 from .settings import dfg_settings
-
-print("Now running", __file__)
 
 class FeedbackForm(Form):
     issues = ChoiceField(label="", required=True, widget=CheckboxSelectMultiple(attrs={"class": "corblimey"}), choices=dfg_settings.ISSUE_CHOICES)
-    issue_comment = CharField()
+    issue_comment = CharField(widget=Textarea(attrs={"name": "issue_comment", 'rows': 4}))
     activities = ChoiceField(label="", required=True, widget=CheckboxSelectMultiple(), choices=dfg_settings.ACTIVITY_CHOICES)
-    activity_comment = CharField()
-    comment = CharField()
+    activity_comment = CharField(widget=Textarea(attrs={"name": "activity_comment", 'rows': 4}))
+    comment = CharField(widget=Textarea(attrs={"name": "comment", 'rows': 4}))
 
     def __init__(self,
+                 *args,
+                 project=None,
+                 user_id=None,
                  satisfaction_legend = dfg_settings.COPY_FIELD_SATISFACTION_LEGEND,
                  comment_hint=dfg_settings.COPY_FIELD_COMMENT_HINT,
                  issues_legend=dfg_settings.ISSUES_LEGEND,
                  comment_legend=dfg_settings.COPY_FIELD_COMMENT_LEGEND,
                  activities_legend=dfg_settings.ACTIVITIES_LEGEND,
-                 *args,
                  **kwargs):
         super().__init__(*args, **kwargs)
 
-        submitter = self.initial["submitter"]
-        submitter_id = str(submitter.id) if submitter.id else None
-
         layouts = [
-            Hidden("submitter", submitter_id),
+            Hidden("user_id", user_id),
+            Hidden("project", project)
         ]
         if dfg_settings.ISSUE_CHOICES:
             layouts.append(
@@ -42,7 +40,7 @@ class FeedbackForm(Form):
         if dfg_settings.ACTIVITY_CHOICES:
             layouts.append(Fieldset(
                     Field.checkboxes("activities"),
-                    Field.textarea("activity_comment", rows=4),
+                    Field.textarea("activity_comment"),
                     legend=activities_legend,
                     legend_size=Size.MEDIUM,
                 )
@@ -52,7 +50,7 @@ class FeedbackForm(Form):
         layouts += [
             Fieldset(
                 HTML(f"<p class='govuk-hint'>{comment_hint}</p>"),
-                Field.textarea("comment", rows=4),
+                Field.textarea("comment"),
                 legend=comment_legend,
                 legend_size=Size.MEDIUM,
             ),
@@ -62,18 +60,29 @@ class FeedbackForm(Form):
         self.helper = FormHelper()
         self.helper.layout = Layout(*layouts)
 
+    def is_valid(self):
+        return True
+
+    def update(self):
+        """
+        Take the record established by the star rating and add feedback.
+        """
+
 class StarsForm(Form):
     satisfaction = ChoiceField(required=True, widget=RadioSelect, choices=SatisfactionOptions.choices)
     submit = Submit("submit", "Submit feedback")
     def __init__(self,
-                 satisfaction_legend = dfg_settings.COPY_FIELD_SATISFACTION_LEGEND,
+                 satisfaction_legend=dfg_settings.COPY_FIELD_SATISFACTION_LEGEND,
+                 project=None,
+                 user_id=None,
                  *args,
                  **kwargs
         ):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.layout=Layout(
-            Hidden("submitter", "Need code here!"),
+            Hidden("user_id", user_id),
+            Hidden("project", project),
             Fieldset(
                 Field.radios(
                     "satisfaction",
@@ -85,4 +94,9 @@ class StarsForm(Form):
             Submit("submit", "Submit feedback")
         )
 
+        def save(self):
+
+            """
+            Store a new record with only the star rating in it.
+            """
 
