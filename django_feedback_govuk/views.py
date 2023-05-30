@@ -17,15 +17,21 @@ class StarsView(FormView):
         """
         Inject user_id and project name to pass as hidden fields.
 
-        Currently an exact copy of FeedbackView.get_form_kwargs ...
+        Started out as an exact copy of FeedbackView.get_form_kwargs ...
         """
         kw = super().get_form_kwargs()
-        kw['project'] = self.request.session['project']
+        kw['project'] = self.request.session.pop('project')
         kw['user_id'] = None
         if self.request.user.is_authenticated:
             kw['user_id'] = self.request.user.id
         return kw
 
+    def form_valid(self):
+        record = dict(
+            user_id=self.user_id,
+            project=self.project,
+            satisfaction=self.satisfaction,
+        )
 
 
 class FeedbackView(FormView):
@@ -38,7 +44,6 @@ class FeedbackView(FormView):
         Inject project ID stored in session to form creation arguments.
         """
         kw = super().get_form_kwargs()
-        kw['project'] = self.request.session['project']
         kw['user_id'] = None
         if self.request.user.is_authenticated:
             kw['user_id'] = self.request.user.id
