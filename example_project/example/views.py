@@ -27,8 +27,7 @@ class ChooseQuestionsView(FormView):
         return super().get(self, self.request)
 
     def post(self, request, *args, **kwargs):
-        print("POST Args was", args, "kwargs was", kwargs)
-        return redirect("/feedback/")
+        return redirect(reverse("get-stars", args=[request.session['project']]))
 
     def get_form_kwargs(self):
         """
