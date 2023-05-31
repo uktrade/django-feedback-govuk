@@ -23,8 +23,8 @@ class Feedback(models.Model):
     placement = models.CharField(max_length=12)
     satisfaction = models.CharField(max_length=30, choices=SatisfactionOptions.choices)
     comment = models.TextField(default="")
-    issues = models.JSONField(default=None)
-    activities = models.JSONField(default=None)
+    issues = models.JSONField(default=list)
+    activities = models.JSONField(default=list)
     submitter = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, null=True)
     submitted_at = models.DateTimeField(null=True, auto_now_add=True)
 

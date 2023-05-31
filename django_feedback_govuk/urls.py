@@ -4,7 +4,7 @@ from . import views
 
 
 urlpatterns = [
-    path("stars/<str:project>/", views.StarsView.as_view(), name="get_stars"),
+    path("stars/<str:project>/", views.StarsView.as_view(), name="get-stars"),
     path("stars/", views.StarsView.as_view(), name="feedback-stars"),
     path("extra/", views.FeedbackView.as_view(), name="feedback-submit"),
     path("confirm/", views.feedback_confirm, name="feedback-confirm"),
