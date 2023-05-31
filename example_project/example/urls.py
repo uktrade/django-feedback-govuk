@@ -17,9 +17,12 @@ from django.contrib import admin
 from django.urls import include, path
 
 from django_feedback_govuk import urls as feedback_urls
+from .views import ProjectSelectView, ChooseQuestionsView
 
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include(feedback_urls)),
+    path("feedback/", include(feedback_urls)),
+    path("", ProjectSelectView.as_view(), name="select-project"),
+    path("cq/<str:project>", ChooseQuestionsView.as_view(), name="choose-questions")
 ]
