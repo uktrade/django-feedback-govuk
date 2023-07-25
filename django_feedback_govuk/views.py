@@ -36,7 +36,7 @@ def feedback_confirm(request):
 
 class UserCanViewFeedback(UserPassesTestMixin):
     def test_func(self):
-        return self.request.user.has_perm("feedback.view_feedback")
+        return self.request.user.has_perm("django_feedback_govuk.view_feedback")
 
 
 class FeedbackListingView(UserCanViewFeedback, ListView):
