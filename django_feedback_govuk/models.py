@@ -15,12 +15,15 @@ class SatisfactionOptions(TextChoices):
     VERY_SATISFIED = "very_satisfied", "Very satisfied"
 
 
-class Feedback(models.Model):
-    satisfaction = models.CharField(max_length=30, choices=SatisfactionOptions.choices)
-    comment = models.TextField(blank=True)
+class BaseFeedback(models.Model):
     submitter = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, null=True)
     submitted_at = models.DateTimeField(null=True, auto_now_add=True)
 
     class Meta:
         verbose_name = "Feedback Submission"
         verbose_name_plural = "Feedback Submissions"
+
+
+class Feedback(BaseFeedback):
+    satisfaction = models.CharField(max_length=30, choices=SatisfactionOptions.choices)
+    comment = models.TextField(blank=True)

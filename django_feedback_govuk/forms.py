@@ -1,6 +1,6 @@
 from crispy_forms_gds.helper import FormHelper
 from crispy_forms_gds.layout import HTML, Field, Fieldset, Hidden, Layout, Size, Submit
-from django.forms import HiddenInput, ModelForm, RadioSelect
+from django.forms import ModelForm, RadioSelect
 
 from .models import Feedback, SatisfactionOptions
 from .settings import dfg_settings
@@ -36,11 +36,12 @@ class FeedbackForm(ModelForm):
                 legend_size=Size.MEDIUM,
             ),
             Fieldset(
-                HTML(f"<p class='govuk-hint'>{dfg_settings.COPY_FIELD_COMMENT_HINT}</p>"),
+                HTML(
+                    f"<p class='govuk-hint'>{dfg_settings.COPY_FIELD_COMMENT_HINT}</p>"
+                ),
                 Field("comment"),
                 legend=dfg_settings.COPY_FIELD_COMMENT_LEGEND,
                 legend_size=Size.MEDIUM,
             ),
             Submit("submit", "Send feedback"),
         )
-
