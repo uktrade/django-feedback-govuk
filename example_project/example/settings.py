@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "crispy_forms",
     "crispy_forms_gds",
-    "example",
+    "custom_feedback",
     "django_feedback_govuk",
 ]
 
@@ -157,7 +157,15 @@ DJANGO_FEEDBACK_GOVUK = {
     "SERVICE_NAME": "Example Project",
     "FEEDBACK_NOTIFICATION_EMAIL_TEMPLATE_ID": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
     "FEEDBACK_NOTIFICATION_EMAIL_RECIPIENTS": ["email@example.com"],
-    "COPY": {
-        "submit_title": "Tell us what you thought about {{ service_name }}"
-    }
+    "COPY": {"submit_title": "Tell us what you thought about {{ service_name }}"},
+    "FEEDBACK_FORMS": {
+        "default": {
+            "form": "django_feedback_govuk.forms.FeedbackForm",
+            "view": "django_feedback_govuk.views.FeedbackView",
+        },
+        "custom": {
+            "form": "custom_feedback.forms.CustomFeedbackForm",
+            "view": "custom_feedback.views.FeedbackView",
+        },
+    },
 }
