@@ -21,6 +21,7 @@ DEFAULTS = {
     },
     "FEEDBACK_FORMS": {
         DEFAULT_FEEDBACK_ID: {
+            "model": "django_feedback_govuk.models.Feedback",
             "form": "django_feedback_govuk.forms.FeedbackForm",
             "view": "django_feedback_govuk.views.FeedbackView",
         },
