@@ -16,9 +16,24 @@ def feedback_submit(context):
     if "form" in context:
         form = context["form"]
     else:
-        initial = {}
-        initial["submitter"] = context.request.user
-        form = FeedbackForm(initial=initial)
+        form = FeedbackForm(initial={"submitter": context.request.user})
+
+    new_context = {
+        "form": form,
+        "service_name": dfg_settings.SERVICE_NAME,
+        "submit_title": dfg_settings.COPY_SUBMIT_TITLE,
+    }
+    return new_context
+
+
+@register.inclusion_tag(
+    "django_feedback_govuk/partials/stars.html", takes_context=True
+)
+def feedback_stars(context):
+    if "form" in context:
+        form = context["form"]
+    else:
+        form = FeedbackForm(initial={"submitter": context.request.user.id})
 
     new_context = {
         "form": form,
