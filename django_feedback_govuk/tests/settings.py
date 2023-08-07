@@ -52,6 +52,7 @@ STATIC_ROOT = os.path.join(TESTS_PATH, "static")
 
 ROOT_URLCONF = "django_feedback_govuk.tests.urls"
 
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Crispy forms
 CRISPY_ALLOWED_TEMPLATE_PACKS = ["gds"]
