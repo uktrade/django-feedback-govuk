@@ -1,23 +1,24 @@
+{% load feedback_tags %}
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-        <h1 class="govuk-heading-l">Feedback</h1>
+        <h1 class="govuk-heading-l">Submitted feedback ({{ form_id }})</h1>
         <table class="govuk-table">
             <thead class="govuk-table__head">
                 <tr class="govuk-table__row">
-                    <th scope="col" class="govuk-table__header">How did you feel about the service you received today?</th>
-                    <th scope="col" class="govuk-table__header">How could we improve this service?</th>
-                    <th scope="col" class="govuk-table__header">Submitted by</th>
-                    <th scope="col" class="govuk-table__header">Submitted at</th>
+                    {% for field_name in fields %}
+                        <th scope="col" class="govuk-table__header">{{ form|get_feedback_form_label:field_name }}</th>
+                    {% endfor %}
+                    <th scope="col" class="govuk-table__header">Submitted</th>
                 </tr>
             </thead>
             <tbody class="govuk-table__body">
                 {% for object in page_obj.object_list %}
                     <tr class="govuk-table__row">
-                        <td class="govuk-table__cell">{{ object.get_satisfaction_display }}</td>
-                        <td class="govuk-table__cell">{{ object.comment }}</td>
-                        <td class="govuk-table__cell">{{ object.submitter }}</td>
-                        <td class="govuk-table__cell">{{ object.submitted_at|date:"d/m/Y H:i" }}</td>
+                        {% for field_name in fields %}
+                            <td class="govuk-table__cell">{{ object|get_feedback_value:field_name }}</td>
+                        {% endfor %}
+                        <td class="govuk-table__cell">{{ object.submitted_at }}</td>
                     </tr>
                 {% endfor %}
             </tbody>

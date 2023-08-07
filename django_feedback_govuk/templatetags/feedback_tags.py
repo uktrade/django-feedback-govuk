@@ -49,6 +49,29 @@ def feedback_listing(context):
     return context
 
 
+@register.inclusion_tag(
+    "django_feedback_govuk/partials/submitted.html", takes_context=True
+)
+def feedback_submitted(context):
+    return context
+
+
+@register.filter()
+def get_feedback_value(object, field_name):
+    get_f_display = f"get_{field_name}_display"
+    if value := getattr(object, get_f_display, None):
+        return value()
+    return getattr(object, field_name)
+
+
+@register.filter()
+def get_feedback_form_label(form, field_name):
+    field = form.fields.get(field_name, None)
+    if field and field.label:
+        return field.label
+    return field_name.replace("_", " ").capitalize()
+
+
 @register.filter()
 def get_elided_page_range(page):
     return page.paginator.get_elided_page_range(page.number, on_each_side=1, on_ends=1)

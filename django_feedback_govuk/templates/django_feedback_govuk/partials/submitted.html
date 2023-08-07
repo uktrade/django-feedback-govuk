@@ -1,0 +1,15 @@
+{% load feedback_tags %}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <h1 class="govuk-heading-l">Submitted feedback</h1>
+        {% for feedback_form in feedback_forms.items %}
+            <div class="govuk-grid-column-one-third">
+                <h2 class="govuk-heading-m">{{ feedback_form.0|capfirst }}</h2>
+                <div class="govuk-body">Submissions: {{ feedback_form.1.submission_count }}</div>
+                <a class="govuk-link"
+                   href="{% url 'feedback-listing' feedback_form.0 %}">View submissions</a>
+            </div>
+        {% endfor %}
+    </div>
+</div>

@@ -1,3 +1,7 @@
-
 {% load feedback_tags %}
+
+{% if not hide_back_button %}
+    <a href="{% url 'submitted-feedback' %}" class="govuk-back-link">Back</a>
+{% endif %}
+
 {% feedback_listing %}
