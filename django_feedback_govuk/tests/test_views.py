@@ -30,8 +30,7 @@ class TestSubmittedView(TestCase):
         self.client.force_login(self.user)
 
         response = self.client.get(self.view_url)
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, "/submitted/default/")
+        self.assertRedirects(response, "/submitted/default/")
 
     def test_has_permission(self):
         self.user.user_permissions.add(
@@ -42,8 +41,7 @@ class TestSubmittedView(TestCase):
         self.client.force_login(self.user)
 
         response = self.client.get(self.view_url)
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, "/submitted/default/")
+        self.assertRedirects(response, "/submitted/default/")
 
 
 class TestSubmittedListingView(TestCase):
