@@ -29,8 +29,8 @@ class TestSubmittedView(TestCase):
     def test_no_permission(self):
         self.client.force_login(self.user)
 
-        response = self.client.get(self.view_url)
-        self.assertRedirects(response, "/submitted/default/")
+        response = self.client.get(self.view_url, follow=True)
+        self.assertEqual(response.status_code, 403)
 
     def test_has_permission(self):
         self.user.user_permissions.add(
