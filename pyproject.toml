@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-feedback-govuk"
-version = "0.2.0"
+version = "0.2.1"
 description = "A Django app to gather and send internal Government staff feedback"
 authors = [
     "jafacakes2011 <cameron.lamb@digitial.trade.gov.uk>",
