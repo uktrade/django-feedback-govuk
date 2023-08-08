@@ -1,11 +1,14 @@
 [tool.poetry]
 name = "django-feedback-govuk"
-version = "0.1.4"
+version = "0.2.0"
 description = "A Django app to gather and send internal Government staff feedback"
-authors = ["jafacakes2011 <cameron.lamb@digitial.trade.gov.uk>", "marcelkornblum <marcel.kornblum@digitial.trade.gov.uk>"]
+authors = [
+    "jafacakes2011 <cameron.lamb@digitial.trade.gov.uk>",
+    "marcelkornblum <marcel.kornblum@digitial.trade.gov.uk>",
+]
 license = "MIT"
 readme = "README.md"
-packages = [{include = "django_feedback_govuk"}]
+packages = [{ include = "django_feedback_govuk" }]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Environment :: Web Environment",
@@ -16,7 +19,7 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: Implementation :: CPython",
     "Topic :: Software Development :: Libraries :: Application Frameworks",
-    "Topic :: Software Development :: Libraries :: Python Modules"
+    "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 
 [tool.poetry.dependencies]
@@ -50,11 +53,7 @@ DJANGO_SETTINGS_MODULE = "tests.settings"
 python_files = ["tests.py", "test_*.py", "*_tests.py"]
 
 [tool.coverage.run]
-omit = [
-    "*/migrations/*",
-    "*/test/*",
-    "selenium_tests/*"
-]
+omit = ["*/migrations/*", "*/test/*", "selenium_tests/*"]
 
 [tool.isort]
 profile = "black"
@@ -64,9 +63,9 @@ line_length = 88
 lines_after_imports = 2
 
 [tool.djlint]
-extension="html"
-profile="django"
-format_js=false
-format_css=false
-ignore="T002,H006,H017,H023"
-preserve_blank_lines=true
+extension = "html"
+profile = "django"
+format_js = false
+format_css = false
+ignore = "T002,H006,H017,H023"
+preserve_blank_lines = true
