@@ -43,7 +43,15 @@ DJANGO_FEEDBACK_GOVUK = {
     "FEEDBACK_NOTIFICATION_EMAIL_RECIPIENTS": ["email@example.com"],
     "COPY": {
         #...add any copy tags to override here
-    }
+    },
+    "FEEDBACK_FORMS": {
+        "default": {
+            "model": "django_feedback_govuk.models.Feedback",
+            "form": "django_feedback_govuk.forms.FeedbackForm",
+            "view": "django_feedback_govuk.views.FeedbackView",
+        },
+        # ...add extra feedback forms here
+    ],
 }
 ```
 
@@ -66,9 +74,8 @@ The email addresses are for every recipient that should get an email when feedba
 3. Build your own templates
 
 Override the built-in templates by making new templates in your app under the
-`django_feedback_govuk/templates` path. You'll need templates for `submit.html`, `confirm.html`
-and `listing.html`, each of which should load its respective template tag from `feedback_submit`,
-`feedback_confirm` and `feedback_listing`.
+`django_feedback_govuk/templates` path. You'll need templates for `submit.html`, `confirm.html`, `listing.html` and `submitted.html`, each of which should load its respective template tag from `feedback_submit`,
+`feedback_confirm`, `feedback_listing` and `feedback_submitted`.
 
 For example:
 
@@ -97,6 +104,78 @@ urlpatterns = [
 ```
 
 5. Set up user permissions
+
+## Adding more/custom feedback forms
+
+The `FEEDBACK_FORMS` key in the `DJANGO_FEEDBACK_GOVUK` settings dict can be used to add a custom feedback model with a custom form and optional view to allow different kinds of feedback to be submitted.
+
+### Define your custom feedback model:
+
+Define a feedback model that inherits from `BaseFeedback`. `BaseFeedback` provides the `submitter` and `submitted_at` fields and logic. Add any custom fields to store the submitted data.
+
+```python
+# models.py
+from django.db import models
+from django_feedback_govuk.models import BaseFeedback
+
+
+class CustomFeedback(BaseFeedback):
+    custom_field = models.TextField(blank=True)
+```
+
+### Define your custom model form:
+
+Define a model form that inherits from `BaseFeedbackForm`. `BaseFeedbackForm` provides the initial foundations for your feedback form. Simply, add your new model fields to the `Meta.fields` list and define the layout using `crispy_forms_gds`. Then move the submit button to the bottom of the layout.
+
+```python
+# forms.py
+from crispy_forms_gds.layout import Field, Fieldset, Size
+from django_feedback_govuk.forms import SUBMIT_BUTTON, BaseFeedbackForm
+from .models import CustomFeedback
+
+
+class CustomFeedbackForm(BaseFeedbackForm):
+    class Meta:
+        model = CustomFeedback
+        fields = ["submitter", "custom_field"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields["custom_field"].label = ""
+
+        self.helper.layout.remove(SUBMIT_BUTTON)
+        self.helper.layout.append(
+            Fieldset(
+                Field("custom_field"),
+                legend="Custom question?",
+                legend_size=Size.MEDIUM,
+            )
+        )
+        self.helper.layout.append(SUBMIT_BUTTON)
+```
+
+### Update settings
+
+Add a new entry to the `DJANGO_FEEDBACK_GOVUK["FEEDBACK_FORMS"]` dict that tells the package where to find the new model and form, give it a unique key that gives some context to the purpose of the new feedback form.
+
+```python
+# settings.py
+DJANGO_FEEDBACK_GOVUK = {
+    ...
+    "FEEDBACK_FORMS": {
+        "default": {
+            "model": "django_feedback_govuk.models.Feedback",
+            "form": "django_feedback_govuk.forms.FeedbackForm",
+            "view": "django_feedback_govuk.views.FeedbackView",
+        },
+        "custom": {
+            "model": "YOUR_PACKAGE.models.CustomFeedback",
+            "form": "YOUR_PACKAGE.forms.CustomFeedbackForm",
+        },
+    ],
+}
+```
 
 ## Pushing to PyPI
 

@@ -2,6 +2,7 @@ import os
 
 import django.utils.crypto
 
+
 TESTS_PATH = os.path.dirname(os.path.abspath(__file__))
 
 SECRET_KEY = django.utils.crypto.get_random_string(50)
@@ -37,3 +38,5 @@ STATIC_ROOT = os.path.join(TESTS_PATH, "static")
 MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
 ]
+
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

@@ -4,7 +4,9 @@
     <div class="govuk-grid-column-full">
         {% error_summary form %}
         <h1 class="govuk-heading-l">{{ submit_title }}</h1>
-        <form novalidate method="post" action="{% url 'feedback-submit' %}">
+        <form novalidate
+              method="post"
+              action="{% url 'custom-feedback-submit' form_id %}">
             {% crispy form %}
         </form>
     </div>

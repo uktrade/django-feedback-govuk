@@ -1,7 +1,9 @@
-from typing import List
+from typing import Dict, List
 
 from django.conf import settings
 
+
+DEFAULT_FEEDBACK_ID = "default"
 
 DEFAULTS = {
     "SERVICE_NAME": "Example service",
@@ -17,6 +19,13 @@ DEFAULTS = {
         "FIELD_COMMENT_LEGEND": "How could we improve this service?",
         "FIELD_COMMENT_HINT": "Do not include any personal or financial information, for example your National Insurance or credit card numbers.",
     },
+    "FEEDBACK_FORMS": {
+        DEFAULT_FEEDBACK_ID: {
+            "model": "django_feedback_govuk.models.Feedback",
+            "form": "django_feedback_govuk.forms.FeedbackForm",
+            "view": "django_feedback_govuk.views.FeedbackView",
+        },
+    },
 }
 
 
@@ -30,6 +39,7 @@ class DjangoFeedbackGovUKSettings:
     COPY_FIELD_SATISFACTION_LEGEND: str
     COPY_FIELD_COMMENT_LEGEND: str
     COPY_FIELD_COMMENT_HINT: str
+    FEEDBACK_FORMS: Dict[str, Dict[str, str]]
 
     def __getattr__(self, attr):
         django_settings = getattr(settings, "DJANGO_FEEDBACK_GOVUK", {})
