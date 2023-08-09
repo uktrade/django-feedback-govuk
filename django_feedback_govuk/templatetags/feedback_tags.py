@@ -10,14 +10,15 @@ register = template.Library()
 @register.inclusion_tag(
     "django_feedback_govuk/partials/submit.html", takes_context=True
 )
-def feedback_submit(context, form_id: str = DEFAULT_FEEDBACK_ID):
+def feedback_submit(context, form_id: str = DEFAULT_FEEDBACK_ID, initial=None):
     feedback_config = dfg_settings.FEEDBACK_FORMS[form_id]
     feedback_form = import_string(feedback_config["form"])
     if "form" in context:
         form = context["form"]
     else:
-        initial = {}
-        initial["submitter"] = context.request.user
+        if not initial:
+            initial = {}
+        initial.update(submitter=context.request.user)
 
         form = feedback_form(initial=initial)
 
