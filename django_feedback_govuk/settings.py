@@ -69,7 +69,7 @@ class DjangoFeedbackGovUKSettings:
         # Return the value from defaults
         return default_value
 
-    def get_copy(self, key_id: str, form_id: Optional[str]) -> str:
+    def get_copy(self, key_id: str, form_id: Optional[str] = None) -> str:
         base_copy_key = f"COPY_{key_id}"
         base_copy_value = getattr(self, base_copy_key)
 
@@ -79,8 +79,8 @@ class DjangoFeedbackGovUKSettings:
         form_config = self.FEEDBACK_FORMS.get(form_id, {})
         form_copy_dict = form_config.get("copy", {})
 
-        if hasattr(form_copy_dict, key_id):
-            return getattr(form_copy_dict, key_id)
+        if key_id in form_copy_dict:
+            return form_copy_dict[key_id]
 
         return base_copy_value
 
