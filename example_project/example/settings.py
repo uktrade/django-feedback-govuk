@@ -171,6 +171,7 @@ DJANGO_FEEDBACK_GOVUK = {
             "view": "custom_feedback.views.FeedbackView",
             "copy": {
                 "SUBMIT_TITLE": "Tell us what you thought about {{ service_name }} (custom)",
+                "CONFIRM_TITLE": "CUSTOM SUBMITTED VALUE!",
             },
         },
     },
