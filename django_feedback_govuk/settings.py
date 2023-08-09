@@ -24,11 +24,6 @@ DEFAULTS = {
             "model": "django_feedback_govuk.models.Feedback",
             "form": "django_feedback_govuk.forms.FeedbackForm",
             "view": "django_feedback_govuk.views.FeedbackView",
-            "copy": {
-                "SUBMIT_TITLE": "Give feedback on {{ service_name }}",
-                "CONFIRM_TITLE": "Feedback submitted",
-                "CONFIRM_BODY": "Thank you for submitting your feedback.",
-            },
         },
     },
 }
