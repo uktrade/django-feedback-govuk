@@ -50,17 +50,17 @@ class FeedbackForm(BaseFeedbackForm):
                     "satisfaction",
                     template="django_feedback_govuk/widgets/star_rating/star_rating.html",
                 ),
-                legend=dfg_settings.COPY_FIELD_SATISFACTION_LEGEND,
+                legend=dfg_settings.get_copy("FIELD_SATISFACTION_LEGEND"),
                 legend_size=Size.MEDIUM,
             )
         )
         self.helper.layout.append(
             Fieldset(
                 HTML(
-                    f"<p class='govuk-hint'>{dfg_settings.COPY_FIELD_COMMENT_HINT}</p>"
+                    f"<p class='govuk-hint'>{dfg_settings.get_copy('FIELD_COMMENT_HINT')}</p>"
                 ),
                 Field("comment"),
-                legend=dfg_settings.COPY_FIELD_COMMENT_LEGEND,
+                legend=dfg_settings.get_copy("FIELD_COMMENT_LEGEND"),
                 legend_size=Size.MEDIUM,
             )
         )

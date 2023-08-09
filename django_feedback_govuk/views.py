@@ -4,7 +4,7 @@ from django import http
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse
 from django.utils.module_loading import import_string
 from django.views.generic import FormView, ListView, TemplateView
 
@@ -15,7 +15,6 @@ from django_feedback_govuk.settings import DEFAULT_FEEDBACK_ID, dfg_settings
 
 class FeedbackView(FormView):
     template_name = "django_feedback_govuk/templates/submit.html"
-    success_url = reverse_lazy("feedback-confirm")
 
     def dispatch(
         self, request: http.HttpRequest, *args: Any, **kwargs: Any
@@ -27,6 +26,9 @@ class FeedbackView(FormView):
         except KeyError:
             raise ValueError(f"Unknown feedback form ID: {self.form_id}")
         return super().dispatch(request, *args, **kwargs)
+
+    def get_success_url(self):
+        return reverse("feedback-confirm", kwargs={"form_id": self.form_id})
 
     def get_form_class(self):
         return import_string(self.feedback_config["form"])
@@ -63,8 +65,12 @@ def get_feedback_view(request, *args, **kwargs):
     return feedback_view.as_view()(request, *args, **kwargs)
 
 
-def feedback_confirm(request):
-    return render(request, "django_feedback_govuk/templates/confirm.html")
+def feedback_confirm(request, *args, **kwargs):
+    form_id = kwargs.get("form_id", DEFAULT_FEEDBACK_ID)
+    context = {
+        "form_id": form_id,
+    }
+    return render(request, "django_feedback_govuk/templates/confirm.html", context)
 
 
 class UserCanViewFeedback(UserPassesTestMixin):

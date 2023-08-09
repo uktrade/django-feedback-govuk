@@ -26,7 +26,7 @@ def feedback_submit(context, form_id: str = DEFAULT_FEEDBACK_ID, initial=None):
         "form": form,
         "form_id": form_id,
         "service_name": dfg_settings.SERVICE_NAME,
-        "submit_title": dfg_settings.COPY_SUBMIT_TITLE,
+        "submit_title": dfg_settings.get_copy("SUBMIT_TITLE", form_id),
     }
     return new_context
 
@@ -34,11 +34,11 @@ def feedback_submit(context, form_id: str = DEFAULT_FEEDBACK_ID, initial=None):
 @register.inclusion_tag(
     "django_feedback_govuk/partials/confirm.html", takes_context=True
 )
-def feedback_confirm(context):
+def feedback_confirm(context, form_id: str = DEFAULT_FEEDBACK_ID):
     new_context = {
         "service_name": dfg_settings.SERVICE_NAME,
-        "confirm_title": dfg_settings.COPY_CONFIRM_TITLE,
-        "confirm_body": dfg_settings.COPY_CONFIRM_BODY,
+        "confirm_title": dfg_settings.get_copy("CONFIRM_TITLE", form_id),
+        "confirm_body": dfg_settings.get_copy("CONFIRM_BODY", form_id),
     }
     return new_context
 

@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 from django.conf import settings
 
@@ -24,6 +24,11 @@ DEFAULTS = {
             "model": "django_feedback_govuk.models.Feedback",
             "form": "django_feedback_govuk.forms.FeedbackForm",
             "view": "django_feedback_govuk.views.FeedbackView",
+            "copy": {
+                "SUBMIT_TITLE": "Give feedback on {{ service_name }}",
+                "CONFIRM_TITLE": "Feedback submitted",
+                "CONFIRM_BODY": "Thank you for submitting your feedback.",
+            },
         },
     },
 }
@@ -63,6 +68,21 @@ class DjangoFeedbackGovUKSettings:
             raise AttributeError(f"No value set for DJANGO_FEEDBACK_GOVUK['{attr}']")
         # Return the value from defaults
         return default_value
+
+    def get_copy(self, key_id: str, form_id: Optional[str]) -> str:
+        base_copy_key = f"COPY_{key_id}"
+        base_copy_value = getattr(self, base_copy_key)
+
+        if form_id is None:
+            return base_copy_value
+
+        form_config = self.FEEDBACK_FORMS.get(form_id, {})
+        form_copy_dict = form_config.get("copy", {})
+
+        if hasattr(form_copy_dict, key_id):
+            return getattr(form_copy_dict, key_id)
+
+        return base_copy_value
 
 
 dfg_settings = DjangoFeedbackGovUKSettings()

@@ -177,6 +177,33 @@ DJANGO_FEEDBACK_GOVUK = {
 }
 ```
 
+### Custom form copy
+
+You can override the default copy passed to the forms by adding a `copy` key to the `DJANGO_FEEDBACK_GOVUK["FEEDBACK_FORMS"][YOUR_FORM]` dict like so:
+
+```python
+# settings.py
+DJANGO_FEEDBACK_GOVUK = {
+    ...
+    "FEEDBACK_FORMS": {
+        "default": {
+            "model": "django_feedback_govuk.models.Feedback",
+            "form": "django_feedback_govuk.forms.FeedbackForm",
+            "view": "django_feedback_govuk.views.FeedbackView",
+        },
+        "custom": {
+            "model": "YOUR_PACKAGE.models.CustomFeedback",
+            "form": "YOUR_PACKAGE.forms.CustomFeedbackForm",
+            "copy": {
+                "SUBMIT_TITLE": "Please provide feedback on {{ service_name }}",
+            },
+        },
+    },
+}
+```
+
+This copy dict should match the formatting of the root `COPY` dict. However, it can't override the copy that is defined on the provided `FeedbackForm`. If you wish to use that form in multiple feedback forms you should create a custom form that inherits from `FeedbackForm`, and update the text there.
+
 ## Pushing to PyPI
 
 - [PyPI Package](https://pypi.org/project/django-feedback-govuk/)
