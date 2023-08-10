@@ -1,5 +1,5 @@
 
 <div class="govuk-panel govuk-panel--confirmation">
-    <h1 class="govuk-panel__title">{{ confirm_title }}</h1>
-    <div class="govuk-panel__body">{{ confirm_body }}</div>
+    {% if confirm_title %}<h1 class="govuk-panel__title">{{ confirm_title }}</h1>{% endif %}
+    {% if confirm_body %}<div class="govuk-panel__body">{{ confirm_body }}</div>{% endif %}
 </div>
