@@ -6,7 +6,7 @@ from . import views
 urlpatterns = [
     path("submit/", views.FeedbackView.as_view(), name="feedback-submit"),
     path("submit/<form_id>/", views.get_feedback_view, name="custom-feedback-submit"),
-    path("confirm/", views.feedback_confirm, name="feedback-confirm"),
+    path("submit/<form_id>/confirm/", views.feedback_confirm, name="feedback-confirm"),
     path(
         "submitted/",
         views.SubmittedFeedback.as_view(),

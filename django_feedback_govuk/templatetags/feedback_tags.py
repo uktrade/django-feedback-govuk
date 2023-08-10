@@ -10,14 +10,15 @@ register = template.Library()
 @register.inclusion_tag(
     "django_feedback_govuk/partials/submit.html", takes_context=True
 )
-def feedback_submit(context, form_id: str = DEFAULT_FEEDBACK_ID):
+def feedback_submit(context, form_id: str = DEFAULT_FEEDBACK_ID, initial=None):
     feedback_config = dfg_settings.FEEDBACK_FORMS[form_id]
     feedback_form = import_string(feedback_config["form"])
     if "form" in context:
         form = context["form"]
     else:
-        initial = {}
-        initial["submitter"] = context.request.user
+        if not initial:
+            initial = {}
+        initial.update(submitter=context.request.user)
 
         form = feedback_form(initial=initial)
 
@@ -25,7 +26,7 @@ def feedback_submit(context, form_id: str = DEFAULT_FEEDBACK_ID):
         "form": form,
         "form_id": form_id,
         "service_name": dfg_settings.SERVICE_NAME,
-        "submit_title": dfg_settings.COPY_SUBMIT_TITLE,
+        "submit_title": dfg_settings.get_copy("SUBMIT_TITLE", form_id),
     }
     return new_context
 
@@ -33,11 +34,11 @@ def feedback_submit(context, form_id: str = DEFAULT_FEEDBACK_ID):
 @register.inclusion_tag(
     "django_feedback_govuk/partials/confirm.html", takes_context=True
 )
-def feedback_confirm(context):
+def feedback_confirm(context, form_id: str = DEFAULT_FEEDBACK_ID):
     new_context = {
         "service_name": dfg_settings.SERVICE_NAME,
-        "confirm_title": dfg_settings.COPY_CONFIRM_TITLE,
-        "confirm_body": dfg_settings.COPY_CONFIRM_BODY,
+        "confirm_title": dfg_settings.get_copy("CONFIRM_TITLE", form_id),
+        "confirm_body": dfg_settings.get_copy("CONFIRM_BODY", form_id),
     }
     return new_context
 

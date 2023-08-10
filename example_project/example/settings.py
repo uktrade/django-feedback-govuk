@@ -158,7 +158,7 @@ DJANGO_FEEDBACK_GOVUK = {
     "SERVICE_NAME": "Example Project",
     "FEEDBACK_NOTIFICATION_EMAIL_TEMPLATE_ID": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
     "FEEDBACK_NOTIFICATION_EMAIL_RECIPIENTS": ["email@example.com"],
-    "COPY": {"submit_title": "Tell us what you thought about {{ service_name }}"},
+    "COPY": {"SUBMIT_TITLE": "Tell us what you thought about {{ service_name }}"},
     "FEEDBACK_FORMS": {
         "default": {
             "model": "django_feedback_govuk.models.Feedback",
@@ -169,6 +169,10 @@ DJANGO_FEEDBACK_GOVUK = {
             "model": "custom_feedback.models.CustomFeedback",
             "form": "custom_feedback.forms.CustomFeedbackForm",
             "view": "custom_feedback.views.FeedbackView",
+            "copy": {
+                "SUBMIT_TITLE": "Tell us what you thought about {{ service_name }} (custom)",
+                "CONFIRM_TITLE": "CUSTOM SUBMITTED VALUE!",
+            },
         },
     },
 }
