@@ -16,7 +16,11 @@ def migrate_from_old_to_new_feedback(apps, schema_editor):
             satisfaction=old_feedback.satisfaction,
             comment=old_feedback.comment,
         )
-        new_feedback.save()
+        # Update the model with the submitted_at field to override the
+        # auto_now_add.
+        Feedback.objects.filter(pk=new_feedback.pk).update(
+            submitted_at=old_feedback.submitted_at,
+        )
 
 
 def migrate_from_new_to_old_feedback(apps, schema_editor):
@@ -30,7 +34,11 @@ def migrate_from_new_to_old_feedback(apps, schema_editor):
             satisfaction=new_feedback.satisfaction,
             comment=new_feedback.comment,
         )
-        old_feedback.save()
+        # Update the model with the submitted_at field to override the
+        # auto_now_add.
+        OldFeedback.objects.filter(pk=old_feedback.pk).update(
+            submitted_at=new_feedback.submitted_at,
+        )
 
 
 class Migration(migrations.Migration):
