@@ -87,7 +87,7 @@ class SubmittedFeedback(UserCanViewFeedback, TemplateView):
             return redirect(
                 reverse(
                     "feedback-listing",
-                    kwargs = {
+                    kwargs={
                         "form_id": form_id,
                     },
                 )
@@ -126,7 +126,7 @@ class FeedbackListingView(UserCanViewFeedback, ListView):
         context = super().get_context_data(**kwargs)
 
         form = self.feedback_form(
-            initial = {
+            initial={
                 "submitter": self.request.user,
             },
         )
@@ -136,11 +136,11 @@ class FeedbackListingView(UserCanViewFeedback, ListView):
         form_fields.append("submitter")
 
         context.update(
-            form_id = self.form_id,
-            form = form,
-            fields = form_fields,
-            model = self.feedback_model,
-            hide_back_button = len(dfg_settings.FEEDBACK_FORMS) == 1,
+            form_id=self.form_id,
+            form=form,
+            fields=form_fields,
+            model=self.feedback_model,
+            hide_back_button=len(dfg_settings.FEEDBACK_FORMS) == 1,
         )
         return context
 
