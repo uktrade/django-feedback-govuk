@@ -1,7 +1,9 @@
 {% load l10n crispy_forms_gds %}
 <fieldset class="govuk-fieldset"
-    {% if field.errors %}aria-describedby="{% for error in field.errors %} {{ field.auto_id }}_{{ forloop.counter }}_error{% endfor %}"{% endif %}
-    {% if field.help_text %}aria-describedby="{{ field.auto_id }}_hint"{% endif %}>
+          {% if field.errors %}aria-describedby="{% for error in field.errors %} {{ field.auto_id }}_{{ forloop.counter }}_error{% endfor %}
+          "
+          {% endif %}
+          {% if field.help_text %}aria-describedby="{{ field.auto_id }}_hint"{% endif %}>
 
     {% if field.label %}
         <legend class="govuk-fieldset__legend{% if legend_size %} {{ legend_size }}{% endif %}">
@@ -16,15 +18,15 @@
     <div class="govuk-radios{% if radios_inline %}--inline{% endif %}{% if radios_small %} govuk-radios--small{% endif %} star-rating3__stars">
         {% for choice in field.field.choices %}
             <input type="radio"
-                name="{{ field.html_name }}"
-                class="star-rating3__input"
-                id="id_{{ field.html_name }}_{{ forloop.counter }}"
-                value="{{ choice.0|unlocalize }}"
-                {% if choice.0 in field.value or choice.0|stringformat:"s" in field.value or choice.0|stringformat:"s" == field.value|stringformat:"s" %} checked="checked" {% endif %}
-                {% if choice.hint %} aria-describedby="id_{{ field.html_name }}_{{ forloop.counter }}_hint"{% endif %} />
+                   name="{{ field.html_name }}"
+                   class="star-rating3__input"
+                   id="id_{{ field.html_name }}_{{ forloop.counter }}"
+                   value="{{ choice.0|unlocalize }}"
+                   {% if choice.0 in field.value or choice.0|stringformat:"s" in field.value or choice.0|stringformat:"s" == field.value|stringformat:"s" %} checked="checked" {% endif %}
+                   {% if choice.hint %}aria-describedby="id_{{ field.html_name }}_{{ forloop.counter }}_hint"{% endif %} />
             <label class="star-rating3__label"
-                for="id_{{ field.html_name }}_{{ forloop.counter }}"
-                aria-label="{{ choice.1|unlocalize }}">
+                   for="id_{{ field.html_name }}_{{ forloop.counter }}"
+                   aria-label="{{ choice.1|unlocalize }}">
                 <span class="govuk-label text">{{ choice.1|unlocalize }}</span>
             </label>
         {% endfor %}
