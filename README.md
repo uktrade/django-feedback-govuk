@@ -238,7 +238,7 @@ Now the make commands should work as expected.
 
 ## Sending automated emails after form submission
 
-Based on the needs of your Service you may want the package to inform you via email of the feedback received. For example you might want to receive an email if there is new feedback to be reviewed and call the method on a regular schedule (e.g. once a day) through cron, Celery Beat, etc.
+Based on the needs of your project you may want to be notified of the feedback received. For example you might want to receive an email if there is new feedback to be reviewed. To do this you can create a method and call it on a regular schedule (e.g. once a day) through cron, Celery Beat, etc.
 
 ```
 feedback_submitted_past_day = (
