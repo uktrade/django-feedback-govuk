@@ -7,10 +7,6 @@ DEFAULT_FEEDBACK_ID = "default"
 
 DEFAULTS = {
     "SERVICE_NAME": "Example service",
-    "FEEDBACK_NOTIFICATION_EMAIL_TEMPLATE_ID": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-    "FEEDBACK_NOTIFICATION_EMAIL_RECIPIENTS": [
-        "email@example.com",
-    ],
     "COPY": {
         "SUBMIT_TITLE": "Give feedback on {{ service_name }}",
         "CONFIRM_TITLE": "Feedback submitted",
