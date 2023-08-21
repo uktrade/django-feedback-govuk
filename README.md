@@ -249,3 +249,5 @@ feedback_submitted_past_day = (
 if feedback_submitted_past_day:
     send_email() # This is not a real method, just an example to show this is where the send email logic would go.
 ```
+
+This can be achieved through the [GovUK Notify](https://docs.notifications.service.gov.uk/python.html#python-client-documentation) Client.
