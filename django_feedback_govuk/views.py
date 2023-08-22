@@ -8,7 +8,6 @@ from django.urls import reverse
 from django.utils.module_loading import import_string
 from django.views.generic import FormView, ListView, TemplateView
 
-from django_feedback_govuk import notify
 from django_feedback_govuk.models import BaseFeedback
 from django_feedback_govuk.settings import DEFAULT_FEEDBACK_ID, dfg_settings
 
@@ -40,16 +39,6 @@ class FeedbackView(FormView):
 
     def form_valid(self, form):
         form.save()
-        feedback_listing_path = reverse(
-            "feedback-listing",
-            kwargs={"form_id": self.form_id},
-        )
-        # Send an email to inform the team of the feedback
-        notify.email(
-            personalisation={
-                "feedback_url": self.request.build_absolute_uri(feedback_listing_path),
-            },
-        )
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:

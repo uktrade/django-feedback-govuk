@@ -33,14 +33,9 @@ You'll need an API key and template ID from the gov.uk Notify service.
 CRISPY_ALLOWED_TEMPLATE_PACKS = ["gds"]
 CRISPY_TEMPLATE_PACK = "gds"
 
-# Gov Notify
-GOVUK_NOTIFY_API_KEY="<your-api-key>"
-
 # Django Feedback GovUK
 DJANGO_FEEDBACK_GOVUK = {
     "SERVICE_NAME": "<your-service>",
-    "FEEDBACK_NOTIFICATION_EMAIL_TEMPLATE_ID": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-    "FEEDBACK_NOTIFICATION_EMAIL_RECIPIENTS": ["email@example.com"],
     "COPY": {
         #...add any copy tags to override here
     },
@@ -240,3 +235,19 @@ poetry config pypi-token.pypi XXXXXXXX
 ```
 
 Now the make commands should work as expected.
+
+## Sending automated emails after form submission
+
+Based on the needs of your project you may want to be notified of the feedback received. For example you might want to receive an email if there is new feedback to be reviewed. To do this you can create a method and call it on a regular schedule (e.g. once a day) through cron, Celery Beat, etc.
+
+```
+feedback_submitted_past_day = (
+    BaseFeedback.objects.all().filter(
+        submitted_at__gte=timezone.now() + timedelta(days=-1),
+    ).exists()
+)
+if feedback_submitted_past_day:
+    send_email() # This is not a real method, just an example to show this is where the send email logic would go.
+```
+
+This can be achieved through the [GovUK Notify](https://docs.notifications.service.gov.uk/python.html#python-client-documentation) Client.

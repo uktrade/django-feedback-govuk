@@ -4,15 +4,16 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('django_feedback_govuk', '0003_restructure_feedback'),
+        ("django_feedback_govuk", "0003_restructure_feedback"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='basefeedback',
-            name='id',
-            field=models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID'),
+            model_name="basefeedback",
+            name="id",
+            field=models.BigAutoField(
+                auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+            ),
         ),
     ]
