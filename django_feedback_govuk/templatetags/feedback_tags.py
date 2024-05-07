@@ -18,7 +18,7 @@ def feedback_submit(context, form_id: str = DEFAULT_FEEDBACK_ID, initial=None):
     else:
         if not initial:
             initial = {}
-        initial.update(submitter=context.request.user)
+        initial.update(submitter=context["request"].user)
 
         form = feedback_form(initial=initial)
 
