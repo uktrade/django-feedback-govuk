@@ -132,3 +132,8 @@ dmypy.json
 example_project/node_modules/
 
 example_project/staticfiles/
+
+# macOS
+*.DS_Store
+.AppleDouble
+.LSOverride
