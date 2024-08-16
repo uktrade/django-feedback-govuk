@@ -106,7 +106,7 @@ class SubmittedFeedback(UserCanViewFeedback, TemplateView):
 class FeedbackListingView(UserCanViewFeedback, ListView):
     template_name = "django_feedback_govuk/templates/listing.html"
     model = BaseFeedback
-    paginate_by = 5
+    paginate_by = dfg_settings.SUBMISSION_PAGINATION
 
     def dispatch(
         self, request: http.HttpRequest, *args: Any, **kwargs: Any

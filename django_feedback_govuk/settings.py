@@ -15,6 +15,7 @@ DEFAULTS = {
         "FIELD_COMMENT_LEGEND": "How could we improve this service?",
         "FIELD_COMMENT_HINT": "Do not include any personal or financial information, for example your National Insurance or credit card numbers.",
     },
+    "SUBMISSION_PAGINATION": 50,
     "FEEDBACK_FORMS": {
         DEFAULT_FEEDBACK_ID: {
             "model": "django_feedback_govuk.models.Feedback",
@@ -35,6 +36,7 @@ class DjangoFeedbackGovUKSettings:
     COPY_FIELD_SATISFACTION_LEGEND: str
     COPY_FIELD_COMMENT_LEGEND: str
     COPY_FIELD_COMMENT_HINT: str
+    SUBMISSION_PAGINATION: int
     FEEDBACK_FORMS: Dict[str, Dict[str, str]]
 
     def __getattr__(self, attr):
