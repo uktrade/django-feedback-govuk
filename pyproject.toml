@@ -24,7 +24,7 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.9"
-Django = ">=4.2,<=5.1"
+Django = ">=4.2,<5.2"
 crispy-forms-gds = "^0.2.4"
 django-crispy-forms = "^1.9"
 
